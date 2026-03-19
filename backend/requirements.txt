@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+ollama
+numpy
+pydantic
+httpx
+
+# Testing
+pytest

@@ -2,8 +2,6 @@ import { useRef, useEffect, useState, useCallback } from "react"
 import { useChatStore } from "@/store/chatStore"
 import { ChatBubble } from "../../molecules/ChatBubble/ChatBubble"
 import { ChatInput } from "../../molecules/ChatInput/ChatInput"
-import { ProjectCard } from "../../molecules/ProjectCard/ProjectCard"
-import { ExperienceCard } from "../../molecules/ExperienceCard/ExperienceCard"
 import { PanelLeft } from "lucide-react"
 import {
   contactSchema,
@@ -13,8 +11,6 @@ import {
 } from "@/lib/contactValidation"
 import { sendContactEmail } from "@/lib/api/contact"
 import { streamChatMessage } from "@/lib/api/chat"
-import { projects } from "@/data/projects"
-import { experiences } from "@/data/experiences"
 import {
   contactAskEmail,
   contactAskMessage,
@@ -22,6 +18,7 @@ import {
   contactSuccessMessage,
   contactSendErrorMessage,
 } from "@/data/contact"
+import { sendProjectMessages, sendExperienceMessages } from "@/lib/chatHelpers"
 import { simulateTypingDelay } from "@/lib/utils"
 import heroAvatar from "@/assets/avatar-4.png"
 
@@ -78,64 +75,6 @@ function WelcomeScreen({
       </div>
     </div>
   )
-}
-
-function sendProjectMessages(
-  addMessage: ReturnType<typeof useChatStore.getState>["addMessage"],
-  setTyping: ReturnType<typeof useChatStore.getState>["setTyping"]
-) {
-  simulateTypingDelay(setTyping, () => {
-    addMessage({
-      role: "assistant",
-      content: "Estos son algunos de mis proyectos destacados:",
-      contentType: "text",
-    })
-
-    projects.forEach((project, index) => {
-      const delay = (index + 1) * 600
-      window.setTimeout(() => {
-        setTyping(true)
-        window.setTimeout(() => {
-          addMessage({
-            role: "assistant",
-            content: project.title,
-            contentType: "project",
-            richContent: <ProjectCard project={project} />,
-          })
-          setTyping(false)
-        }, 700)
-      }, delay)
-    })
-  })
-}
-
-function sendExperienceMessages(
-  addMessage: ReturnType<typeof useChatStore.getState>["addMessage"],
-  setTyping: ReturnType<typeof useChatStore.getState>["setTyping"]
-) {
-  simulateTypingDelay(setTyping, () => {
-    addMessage({
-      role: "assistant",
-      content: "Esta es mi experiencia profesional:",
-      contentType: "text",
-    })
-
-    experiences.forEach((experience, index) => {
-      const delay = (index + 1) * 600
-      window.setTimeout(() => {
-        setTyping(true)
-        window.setTimeout(() => {
-          addMessage({
-            role: "assistant",
-            content: `${experience.role} en ${experience.company}`,
-            contentType: "experience",
-            richContent: <ExperienceCard experience={experience} />,
-          })
-          setTyping(false)
-        }, 700)
-      }, delay)
-    })
-  })
 }
 
 export function ChatInterface() {
@@ -343,7 +282,7 @@ export function ChatInterface() {
   }
 
   return (
-    <div className="flex flex-col h-screen w-full">
+    <div className="flex flex-col h-screen w-full relative">
       {/* Top bar */}
       <div className="h-14 flex items-center px-4 border-b border-border/50 flex-shrink-0">
         {!sidebarOpen && (
@@ -351,6 +290,7 @@ export function ChatInterface() {
             onClick={toggleSidebar}
             className="p-2 rounded-lg hover:bg-secondary text-muted-foreground transition-colors mr-2"
             aria-label="Abrir sidebar"
+            aria-expanded={sidebarOpen}
           >
             <PanelLeft className="w-5 h-5" />
           </button>

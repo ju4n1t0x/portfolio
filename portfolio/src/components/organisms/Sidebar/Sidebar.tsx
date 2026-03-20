@@ -1,11 +1,10 @@
+import { useEffect, useRef } from "react"
 import { cn, simulateTypingDelay } from "@/lib/utils"
 import { useChatStore, useThemeStore } from "@/store/chatStore"
+import { useIsDesktop } from "@/hooks/useMediaQuery"
 import { aboutResponse } from "@/data/responses"
-import { projects } from "@/data/projects"
-import { experiences } from "@/data/experiences"
 import { contactFlowIntro } from "@/data/contact"
-import { ProjectCard } from "../../molecules/ProjectCard/ProjectCard"
-import { ExperienceCard } from "../../molecules/ExperienceCard/ExperienceCard"
+import { sendProjectMessages, sendExperienceMessages } from "@/lib/chatHelpers"
 import type { SidebarSectionId } from "@/types"
 import {
   MessageSquare,
@@ -33,73 +32,65 @@ const sections: SidebarItem[] = [
   { id: "contact", label: "Contacto", icon: <Mail className="w-4 h-4" /> },
 ]
 
-function sendProjectMessages(
-  addMessage: ReturnType<typeof useChatStore.getState>["addMessage"],
-  setTyping: ReturnType<typeof useChatStore.getState>["setTyping"]
-) {
-  // First send an intro message
-  simulateTypingDelay(setTyping, () => {
-    addMessage({
-      role: "assistant",
-      content: "Estos son algunos de mis proyectos destacados:",
-      contentType: "text",
-    })
-
-    // Then send each project as a separate bubble with staggered delays
-    projects.forEach((project, index) => {
-      const delay = (index + 1) * 600
-      window.setTimeout(() => {
-        setTyping(true)
-        window.setTimeout(() => {
-          addMessage({
-            role: "assistant",
-            content: project.title,
-            contentType: "project",
-            richContent: <ProjectCard project={project} />,
-          })
-          setTyping(false)
-        }, 700)
-      }, delay)
-    })
-  })
-}
-
-function sendExperienceMessages(
-  addMessage: ReturnType<typeof useChatStore.getState>["addMessage"],
-  setTyping: ReturnType<typeof useChatStore.getState>["setTyping"]
-) {
-  simulateTypingDelay(setTyping, () => {
-    addMessage({
-      role: "assistant",
-      content: "Esta es mi experiencia profesional:",
-      contentType: "text",
-    })
-
-    experiences.forEach((experience, index) => {
-      const delay = (index + 1) * 600
-      window.setTimeout(() => {
-        setTyping(true)
-        window.setTimeout(() => {
-          addMessage({
-            role: "assistant",
-            content: `${experience.role} en ${experience.company}`,
-            contentType: "experience",
-            richContent: <ExperienceCard experience={experience} />,
-          })
-          setTyping(false)
-        }, 700)
-      }, delay)
-    })
-  })
-}
-
 export function Sidebar() {
-  const { sidebarOpen, toggleSidebar, addMessage, setTyping, startContactFlow, setCurrentSection } = useChatStore()
+  const { sidebarOpen, toggleSidebar, setSidebarOpen, addMessage, setTyping, startContactFlow, setCurrentSection } = useChatStore()
   const { theme, toggleTheme } = useThemeStore()
+  const isDesktop = useIsDesktop("md")
+  
+  // Track if we've passed initial mount and what viewport we had
+  const wasDesktop = useRef(false)
+  const isInitialMount = useRef(true)
+  
+  // Only auto-close on breakpoint change FROM desktop TO mobile
+  // Don't close on initial mount - let the viewport determine visibility
+  useEffect(() => {
+    // Skip initial mount - this runs after first render, viewport is already set
+    if (isInitialMount.current) {
+      isInitialMount.current = false
+      // Set initial desktop state
+      if (isDesktop) {
+        wasDesktop.current = true
+      }
+      return
+    }
+    
+    // If we were desktop and now we're mobile, close the sidebar
+    if (wasDesktop.current && !isDesktop && sidebarOpen) {
+      setSidebarOpen(false)
+    }
+    
+    // Update reference for next comparison
+    if (isDesktop) {
+      wasDesktop.current = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDesktop])
+
+  // Handle escape key to close sidebar on mobile
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && sidebarOpen && !isDesktop) {
+        setSidebarOpen(false)
+      }
+    }
+
+    document.addEventListener("keydown", handleEscape)
+    return () => document.removeEventListener("keydown", handleEscape)
+  }, [sidebarOpen, isDesktop, setSidebarOpen])
+
+  // Handle backdrop click
+  const handleBackdropClick = () => {
+    setSidebarOpen(false)
+  }
 
   const handleSectionClick = (sectionId: SidebarSectionId) => {
     // Update section state FIRST before any other action
     setCurrentSection(sectionId)
+
+    // Auto-close sidebar on mobile after navigation
+    if (!isDesktop) {
+      setSidebarOpen(false)
+    }
     
     switch (sectionId) {
       case "about":
@@ -129,13 +120,32 @@ export function Sidebar() {
   }
 
   return (
-    <aside
-      className={cn(
-        "flex-shrink-0 h-screen flex flex-col transition-all duration-300 ease-in-out overflow-hidden",
-        "bg-[hsl(var(--sidebar))] border-r border-[hsl(var(--sidebar-border))]",
-        sidebarOpen ? "w-64" : "w-0"
+    <>
+      {/* Backdrop - only on mobile when open */}
+      {!isDesktop && sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300"
+          onClick={handleBackdropClick}
+          aria-hidden="true"
+        />
       )}
-    >
+
+      <aside
+        className={cn(
+          "flex-shrink-0 h-screen flex flex-col overflow-hidden",
+          "bg-[hsl(var(--sidebar))] border-r border-[hsl(var(--sidebar-border))]",
+          isDesktop
+            ? cn(
+                "relative transition-all duration-300 ease-in-out",
+                sidebarOpen ? "w-64" : "w-0"
+              )
+            : cn(
+                "fixed inset-y-0 left-0 z-50 w-64",
+                "transition-transform duration-300 ease-in-out",
+                sidebarOpen ? "translate-x-0 pointer-events-auto" : "-translate-x-full pointer-events-none"
+              )
+        )}
+      >
       <div className="flex items-center justify-between p-3 h-14">
         <button
           onClick={toggleSidebar}
@@ -203,5 +213,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   )
 }

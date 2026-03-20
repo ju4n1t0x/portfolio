@@ -1,140 +1,108 @@
-JUAN IGNACIO SASIA
-Desarrollador Full Stack
+# Juan Ignacio Sasia - Contexto Profesional
 
-📍 Santa Fe, Argentina
-✉️ juanignaciosasia@gmail.com
+## Información de Contacto
 
-📱 +54 9 342 515-5063
+- 📍 Córdoba, Argentina
+- ✉️ contacto@juansasia.com
+- 🌐 juansasia.com
 
-Perfil Profesional
+## Perfil Profesional
 
-Desarrollador Full Stack con experiencia práctica en Python, FastAPI y Django, desarrollo backend y frontend, manejo de bases de datos relacionales (MySQL) y control de versiones con Git.
+Desarrollador Full Stack con experiencia en el desarrollo de aplicaciones web completas, desde el diseño de interfaces hasta la implementación de APIs backend. Combina conocimientos en múltiples tecnologías del frontend y backend, con un enfoque en la calidad del código, arquitectura escalable y buenas prácticas de desarrollo.
 
-Estudiante de carreras de sistemas, con experiencia en entornos corporativos, trabajo en equipo y comunicación efectiva. Perfil orientado a la mejora continua y al aprendizaje guiado dentro de equipos de desarrollo.
+Orientado al aprendizaje continuo y a la mejora constante. Perfil proactivo con experiencia en entornos corporativos, trabajo en equipo y comunicación efectiva.
 
-Enfoque:
-Fullstack Development | REST APIs | Agile / Scrum | Clean Code | Problem Solving
+## Habilidades Técnicas
 
-Experiencia Profesional
-Desarrollador Backend – API REST
+### Lenguajes y Frameworks
 
-Xinergia Soluciones | Santa Fe, Argentina
-📅 Diciembre 2025 – Actualidad
+- **Backend**: Python (FastAPI), PHP (Laravel 12), Java (Spring Boot)
+- **Frontend**: React 19, Astro, TypeScript, JavaScript
+- **Bases de datos**: MySQL, PostgreSQL
+- **DevOps**: Docker, Dokploy, Cloudflare, Vercel
 
-Análisis del sistema existente y diseño de una API REST escalable en Laravel 12.
+### Herramientas y Otros
 
-Desacople del backend para permitir integración con nuevo frontend.
+- Control de versiones: Git
+- Testing de APIs: Bruno, Postman
+- Emails transaccionales: Resend
+- Metodologías: Agile/Scrum, Clean Code, SOLID
+- Diseño responsive y UX'
 
-Reverse engineering de base de datos con MySQL Workbench.
+## Proyectos Destacados
 
-Diseño de endpoints RESTful optimizados mediante query parameters.
+### Portfolio Personal (2024-Actualidad)
+Portfolio profesional con interfaz conversacional estilo ChatGPT que permite a recruiters chatear con un asistente de IA para conocer mi perfil.
 
-Implementación de arquitectura desacoplada (Controllers + Services) aplicando principios SOLID.
+- **Stack**: React 19, TypeScript, Zustand, Tailwind CSS, FastAPI, Python
+- **Features**: RAG (Retrieval-Augmented Generation) para respuestas contextualizadas, streaming de mensajes en tiempo real, autenticación JWT, containerización Docker, deploy automatizado en Dokploy
+- **URL**: https://juansasia.com
+- **Repo**: https://github.com/ju4n1t0x/portfolio
 
-Integración de autenticación segura con claves públicas/privadas y tokens.
+### SteelMat - Sitio Corporativo (2025-2026)
+Desarrollo completo de sitio web corporativo para empresa de construcción en seco.
 
-Validaciones y respuestas estructuradas con FormRequest y FormResponse.
+- **Stack**: Astro, TypeScript, Tailwind CSS, Resend
+- **Features**: Diseño responsive, formularios de contacto con emails transaccionales, optimización SEO, migración de hosting (InMotion → DonWeb), configuración de DNS y dominio propio
+- **URL**: https://steelmat.com.ar
+- **Repo**: https://github.com/ju4n1t0x/steelmat
 
-Documentación y testing de endpoints con Bruno.
+### API RESTful - Xinergia (2025-Actualidad)
+Diseño y desarrollo de API RESTful para plataforma e-learning institucional.
 
-Tecnologías: Laravel 12, REST APIs, MySQL, Eloquent ORM
+- **Stack**: PHP 8.3, Laravel 12, JWT, MySQL, Bruno
+- **Features**: Migración de PHP 5 legacy a PHP 8.3 moderno, endpoints RESTful con autenticación por clave pública/privada, desacoplamiento del frontend, reverse engineering de base de datos, arquitectura Controller + Service con principios SOLID
+- **Repo**: Privado (políticas de seguridad de la empresa)
 
-Desarrollador Web
+## Experiencia Profesional
 
-SteelMat | Santa Fe, Argentina
-📅 Junio 2025 – Enero 2026
+### Backend Developer - Xinergia (2025 - Presente)
+Plataforma e-learning para institución educativa.
 
-Desarrollo de sitio web corporativo con Astro y Tailwind CSS.
+- Migración y modernización de API REST legacy de PHP 5 a PHP 8.3 con Laravel 12
+- Diseño de endpoints RESTful con autenticación segura (claves pública/privada y tokens JWT)
+- Reverse engineering de base de datos MySQL con MySQL Workbench
+- Implementación de arquitectura desacoplada (Controllers + Services) aplicando principios SOLID
+- Documentación y testing de endpoints con Bruno
+- Mejoras funcionales para aumentar competitividad en el mercado
 
-Optimización de performance, diseño responsive y UX.
+### Full Stack Developer - SteelMat (2025 - 2026)
+Empresa de construcción en seco.
 
-Implementación de formularios con envío de correos mediante Resend.
+- Desarrollo integral del sitio web corporativo desde cero
+- Implementación de formularios con envío de correos mediante Resend
+- Gestión de migración de hosting y configuración de servicio de mailing corporativo
+- Deploy y mantenimiento en Vercel
 
-Deploy y mantenimiento en Vercel.
+### Tutor Académico - UTN Santa Fe (2025 - Presente)
+Universidad Tecnológica Nacional - Tecnicatura Universitaria en Tecnologías de la Información.
 
-Migración de correos corporativos (InMotion → DonWeb).
+- Tutor en asignaturas de Diseño de Sistemas de Información y Desarrollo de Sitios Web
+- Acompañamiento académico y mentoría en buenas prácticas de desarrollo
+- Apoyo en resolución de trabajos prácticos y refuerzo de conceptos teóricos
 
-Configuración de DNS y validación de servicios de email.
+### Administrativo - Jerárquicos Salud (2021 - Presente)
+Obra social de la medicina.
 
-Tecnologías: Astro, Tailwind CSS, Resend, Vercel, DNS, Email Hosting
+- Gestión y análisis de información administrativa y operativa
+- Uso intensivo de sistemas y bases de datos
+- Coordinación interáreas y comunicación efectiva
+- Modalidad home office con alta autonomía
 
-Administrativo / Atención al Socio
+## Educación
 
-Jerárquicos Salud | Santa Fe, Argentina
-📅 Enero 2021 – Actualidad
+### Tecnicatura Universitaria en Tecnologías de la Información
+Universidad Tecnológica Nacional (UTN) - Santa Fe
+Marzo 2014 - Enero 2025
 
-Gestión y análisis de información administrativa y operativa.
+### Licenciatura en Ciencia de Datos
+Universidad del Gran Rosario - Rosario
+En curso
 
-Uso intensivo de sistemas y bases de datos.
+## Intereses y Enfoque
 
-Coordinación interáreas y comunicación efectiva.
-
-Modalidad home office con alta autonomía.
-
-Valor agregado IT: experiencia en procesos críticos, calidad de datos y trabajo colaborativo.
-
-Administrativo / Facturación
-
-Diagnóstico por Imágenes SA | Santa Fe, Argentina
-📅 Febrero 2018 – Diciembre 2020
-
-Atención al público y call center.
-
-Gestión de turnos médicos y agenda.
-
-Facturación de prácticas médicas y control de órdenes.
-
-Cierres mensuales y soporte operativo.
-
-Administrativo Contable
-
-Estudio Contable Económico Impositivo "Claudio Fortuna" | Santo Tomé, Argentina
-📅 Diciembre 2017
-
-Atención al cliente y gestión administrativa.
-
-Liquidación de impuestos.
-
-Libros IVA, balances y declaraciones juradas.
-
-Soporte contable y fiscal.
-
-Educación
-Tecnicatura Universitaria en Tecnologías de la Información
-
-Universidad Tecnológica Nacional (UTN) – Santa Fe, Argentina
-📅 Marzo 2014 – Enero 2025
-
-Licenciatura en Ciencia de Datos
-
-Universidad del Gran Rosario – Rosario, Argentina
-📅 Actualidad
-
-Habilidades
-Tecnologías
-
-Java / Spring / Spring Boot
-
-MySQL / PostgreSQL
-
-Docker
-
-React
-
-Laravel
-
-Python
-
-Habilidades Profesionales
-
-Comunicación efectiva
-
-Pensamiento lógico
-
-Resolución de problemas
-
-Aprendizaje continuo
-
-Responsabilidad profesional
-
-Gestión de proyectos
+- Fullstack Development
+- REST APIs
+- Clean Architecture
+- RAG (Retrieval-Augmented Generation)
+- Containers y DevOps

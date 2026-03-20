@@ -42,7 +42,7 @@ export async function sendChatMessage(
 
 /**
  * Stream chat messages from /agentJuani endpoint.
- * Uses Server-Sent Events (SSE) streaming.
+ * Uses Server-Sent Events (SSE) streaming with robust parsing.
  * 
  * @param message - The user's message
  * @param onChunk - Callback invoked for each chunk of streamed content
@@ -74,25 +74,43 @@ export async function streamChatMessage(
 
   const reader = response.body.getReader()
   const decoder = new TextDecoder()
+  
+  // Buffer para manejar fragmentos de líneas SSE
+  let buffer = ""
 
   try {
     while (true) {
       const { done, value } = await reader.read()
       
-      if (done) break
-
-      // stream: false ensures immediate delivery of each chunk
-      const chunk = decoder.decode(value, { stream: false })
-      
-      // Parse SSE format: "data: {content}\n\n"
-      // Each chunk may contain multiple SSE events
-      const lines = chunk.split("\n")
-      
-      for (const line of lines) {
-        if (line.startsWith("data: ")) {
-          const content = line.slice(6) // Remove "data: " prefix
+      if (done) {
+        // Procesar lo que queda en el buffer al final
+        if (buffer.startsWith("data: ")) {
+          const content = buffer.slice(6).trim()
           if (content && content !== "[DONE]") {
             onChunk(content)
+          }
+        }
+        break
+      }
+
+      // Decodificar con stream: true para manejar caracteres multi-byte
+      const chunk = decoder.decode(value, { stream: true })
+      buffer += chunk
+      
+      // Procesar el buffer buscando eventos SSE completos
+      // Un evento SSE termina con "\n\n" o "\r\n\r\n"
+      while (buffer.includes("\n")) {
+        const lines = buffer.split("\n")
+        
+        // El último elemento puede estar incompleto, mantenerlo en buffer
+        buffer = lines.pop() || ""
+        
+        for (const line of lines) {
+          if (line.startsWith("data: ")) {
+            const content = line.slice(6) // Remove "data: " prefix
+            if (content && content !== "[DONE]") {
+              onChunk(content)
+            }
           }
         }
       }

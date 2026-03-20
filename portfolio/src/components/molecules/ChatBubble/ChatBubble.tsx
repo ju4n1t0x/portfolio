@@ -1,6 +1,8 @@
 import { cn } from "@/lib/utils"
 import type { Message } from "@/types"
 import { User, Bot, RefreshCw } from "lucide-react"
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 
 interface ChatBubbleProps {
   message: Message
@@ -48,8 +50,36 @@ export function ChatBubble({ message, onRetry }: ChatBubbleProps) {
                   {message.richContent}
                 </div>
               ) : (
-                <div className="text-foreground/90 leading-relaxed whitespace-pre-wrap">
-                  {message.content}
+                <div className="text-foreground/90 leading-relaxed">
+                  <ReactMarkdown
+                    remarkPlugins={[remarkGfm]}
+                    components={{
+                      // Customize rendered elements
+                      p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                      ul: ({ children }) => <ul className="list-disc list-inside space-y-1 mb-2">{children}</ul>,
+                      ol: ({ children }) => <ol className="list-decimal list-inside space-y-1 mb-2">{children}</ol>,
+                      li: ({ children }) => <li>{children}</li>,
+                      strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>,
+                      em: ({ children }) => <em className="italic">{children}</em>,
+                      a: ({ href, children }) => (
+                        <a href={href} className="text-primary underline hover:text-primary/80" target="_blank" rel="noopener noreferrer">
+                          {children}
+                        </a>
+                      ),
+                      code: ({ children }) => (
+                        <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">
+                          {children}
+                        </code>
+                      ),
+                      pre: ({ children }) => (
+                        <pre className="bg-muted p-3 rounded-lg overflow-x-auto mb-2">
+                          {children}
+                        </pre>
+                      ),
+                    }}
+                  >
+                    {message.content}
+                  </ReactMarkdown>
                 </div>
               )}
               {message.hasError && onRetry && (

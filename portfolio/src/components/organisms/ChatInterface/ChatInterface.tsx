@@ -56,7 +56,7 @@ function WelcomeScreen({
           />
         </div>
         <h1 className="text-3xl font-semibold text-foreground tracking-tight">
-          Hola, soy Juan Ignacio
+          Hola, soy Juan Ignacio.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
           Desarrollador Full Stack. Te invito a chatear conmigo y conocerme.
@@ -304,7 +304,7 @@ export function ChatInterface() {
         )}
         <a 
           className="text-sm font-medium text-foreground"
-          href="https://juanignaciosasia.com"
+          href="https://juansasia.com"
           target="_blank"
           rel="noopener noreferrer"
         >

@@ -15,7 +15,7 @@ export const projects: Project[] = [
     description:
       "Migración y desarrollo de API RESTful para dashboard administrativo de plataforma e-learning. El sistema gestiona cursos online, usuarios y transacciones, exponiendo endpoints seguros para consumo de aplicaciones de terceros.",
     technologies: ["PHP 8.3", "Laravel 12", "JWT", "MySQL", "Bruno"],
-    repoUrl: "Repositorio privado por políticas de seguridad de la empresa",
+    repoUrl: "",
     projectUrl: "",
     images: [],
   },
@@ -25,7 +25,7 @@ export const projects: Project[] = [
     description:
       "Desarrollo de sitio web corporativo para empresa de construcción en seco. Diseño moderno y responsive con sistema de contacto mediante emails transaccionales. Incluye migración de hosting y optimización SEO para posicionamiento local.",
     technologies: ["Astro", "TypeScript", "Resend", "Tailwind CSS"],
-    repoUrl: "https://github.com/ju4n1t0x/steelmat",
+    repoUrl: "",
     projectUrl: "https://steelmat.com.ar",
     images: [steelmat1, steelmat3],
   },

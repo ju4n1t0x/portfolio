@@ -5,6 +5,7 @@
 - 📍 Córdoba, Argentina
 - ✉️ contacto@juansasia.com
 - 🌐 juansasia.com
+- 3425155063
 
 ## Perfil Profesional
 

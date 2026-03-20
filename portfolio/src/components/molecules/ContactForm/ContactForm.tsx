@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Button, Input } from "../../atoms"
 import { cn } from "@/lib/utils"
 import { contactSchema, type ContactFormData } from "@/lib/contactValidation"
+import { sendContactEmail } from "@/lib/api/contact"
 
 interface ContactFormProps {
   onSuccess?: () => void
@@ -20,20 +21,13 @@ export function ContactForm({ onSuccess, className }: ContactFormProps) {
   })
 
   const onSubmit = async (data: ContactFormData) => {
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      })
-
-      if (response.ok) {
-        reset()
-        onSuccess?.()
-      }
-    } catch (error) {
-      console.error("Error sending message:", error)
+    const result = await sendContactEmail(data)
+    if (result.success) {
+      reset()
+      onSuccess?.()
+      return
     }
+    console.error("Error sending message:", result.error)
   }
 
   return (
@@ -63,16 +57,16 @@ export function ContactForm({ onSuccess, className }: ContactFormProps) {
 
       <div>
         <textarea
-          {...register("message")}
+          {...register("consulta")}
           placeholder="Tu mensaje"
           rows={4}
           className={cn(
             "flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
-            errors.message ? "border-destructive" : ""
+            errors.consulta ? "border-destructive" : ""
           )}
         />
-        {errors.message && (
-          <p className="text-sm text-destructive mt-1">{errors.message.message}</p>
+        {errors.consulta && (
+          <p className="text-sm text-destructive mt-1">{errors.consulta.message}</p>
         )}
       </div>
 

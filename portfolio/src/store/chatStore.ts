@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import type { ChatState, ThemeState } from "../types"
 
-const initialContactData = { name: undefined, email: undefined, message: undefined }
+const initialContactData = { name: undefined, email: undefined, consulta: undefined }
 
 export const useChatStore = create<ChatState>((set) => ({
   messages: [],
@@ -42,6 +42,39 @@ export const useChatStore = create<ChatState>((set) => ({
   clearMessages: () => set({ messages: [] }),
 
   setCurrentSection: (section) => set({ currentSection: section }),
+
+  // Streaming message actions
+  startStreamingMessage: (content: string) => {
+    const id = crypto.randomUUID()
+    set((state) => ({
+      messages: [
+        ...state.messages,
+        {
+          id,
+          role: "assistant" as const,
+          content,
+          timestamp: new Date(),
+        },
+      ],
+    }))
+    return id
+  },
+
+  appendToStreamingMessage: (id: string, content: string) => {
+    set((state) => ({
+      messages: state.messages.map((msg) =>
+        msg.id === id ? { ...msg, content: msg.content + content } : msg
+      ),
+    }))
+  },
+
+  markMessageAsError: (id: string) => {
+    set((state) => ({
+      messages: state.messages.map((msg) =>
+        msg.id === id ? { ...msg, hasError: true } : msg
+      ),
+    }))
+  },
 }))
 
 export const useThemeStore = create<ThemeState>((set) => ({

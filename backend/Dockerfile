@@ -11,9 +11,7 @@ COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 ENV PYTHONPATH=/app
-ENV EMBEDDINGS_PATH=/app/data/embeddings.json
 
 EXPOSE 8000
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-

@@ -19,9 +19,6 @@
 ### Scripts Útiles
 
 ```bash
-# Generar embeddings desde curriculum
-python -m app.scripts.build_embeddings
-
 # Run con hot reload
 uvicorn app.main:app --reload --port 8000
 ```

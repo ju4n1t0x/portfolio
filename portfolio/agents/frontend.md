@@ -91,25 +91,26 @@ const ContactForm = () => {
 };
 ```
 
-### Email (Resend API)
+### Email (Backend endpoint)
 
 ```typescript
-// src/lib/resend.ts
-import { Resend } from 'resend';
+// src/lib/api/contact.ts
+export async function sendContactEmail(data: ContactEmailData) {
+  const response = await fetch(`${API_BASE_URL}/sendEmail`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  })
 
-const resend = new Resend(import.meta.env.VITE_RESEND_API_KEY);
+  if (!response.ok) {
+    const error = await response.json()
+    return { success: false, error }
+  }
 
-export const sendEmail = async (data: EmailData) => {
-  return resend.emails.send({
-    from: 'portfolio@juani.dev',
-    to: data.to,
-    subject: data.subject,
-    text: data.message,
-  });
-};
+  const result = await response.json()
+  return { success: true, data: result }
+}
 ```
-
-**Note:** API key exposure risk — consider moving to serverless function in production.
 
 ### No Inline Business Logic
 

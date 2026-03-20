@@ -11,7 +11,7 @@
 | Styling | TailwindCSS 3.4 |
 | UI Components | Shadcn |
 | Forms | react-hook-form + Zod |
-| Email | Resend API |
+| Email | Backend /sendEmail |
 
 ## Architecture Pattern
 
@@ -54,7 +54,8 @@ src/
 │   ├── chatStore.ts (Zustand)
 │   └── themeStore.ts (theme state)
 ├── lib/
-│   ├── resend.ts (Resend API client)
+│   └── api/
+│       └── contact.ts (contact form API)
 │   └── api/
 │       └── contact.ts (contact form API)
 ├── hooks/
@@ -93,7 +94,7 @@ interface ThemeState {
 ### Contact Form
 
 ```typescript
-// POST /api/contact
+// POST /sendEmail
 interface ContactRequest {
   name: string;
   email: string;
@@ -126,12 +127,12 @@ Pipeline:
 
 ## Known Issues
 
-### 1. API Key Exposure (CRITICAL)
+### 1. Client/Backend Contract Drift (MEDIUM)
 
 - **Severity**: CRITICAL
 - **Location**: `src/lib/api/contact.ts`
-- **Problem**: Resend API key used in client (`import.meta.env.VITE_RESEND_API_KEY`), exposed to browser
-- **Fix**: Move to Vercel Edge Functions, API route, or backend
+- **Problem**: Frontend endpoint must match backend contract
+- **Fix**: Align frontend to POST `/sendEmail`
 
 ### 2. Dead Code: ContactForm
 

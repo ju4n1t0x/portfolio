@@ -10,6 +10,7 @@ export interface Message {
   contentType?: MessageContentType
   richContent?: ReactNode
   timestamp: Date
+  hasError?: boolean
 }
 
 // --- Project data model ---
@@ -55,7 +56,7 @@ export type ContactFlowStep = "name" | "email" | "message"
 export interface ContactData {
   name?: string
   email?: string
-  message?: string
+  consulta?: string
 }
 
 export interface ChatState {
@@ -75,6 +76,10 @@ export interface ChatState {
   resetContactFlow: () => void
   clearMessages: () => void
   setCurrentSection: (section: SidebarSectionId | null) => void
+  // Streaming message actions
+  startStreamingMessage: (content: string) => string
+  appendToStreamingMessage: (id: string, content: string) => void
+  markMessageAsError: (id: string) => void
 }
 
 export interface ThemeState {

@@ -6,7 +6,7 @@ Portfolio profesional con asistente AI integrado para recruiters.
 
 - **Frontend**: React 19, TypeScript, Zustand, TailwindCSS
 - **Backend**: FastAPI, Python 3.12, Ollama
-- **AI**: RAG con embeddings semánticos
+- **AI**: Asistente basado en contexto
 
 ## Quick Start
 
@@ -41,7 +41,7 @@ portfolio/
 ├── backend/
 │   ├── app/
 │   │   ├── main.py           # FastAPI app
-│   │   ├── client/           # Ollama, embeddings, RAG
+│   │   ├── client/           # Ollama
 │   │   ├── context/          # Curriculum context
 │   │   └── scripts/          # Scripts de build
 │   └── requirements.txt
@@ -51,16 +51,11 @@ portfolio/
 ## Features
 
 - Chat AI con contexto de CV (RAG)
-- Embeddings pre-generados para búsqueda semántica
 - Modelo local via Ollama (no requiere API keys)
 
 ## Development
 
 ```bash
-# Generar embeddings desde curriculum
-cd backend
-python -m app.scripts.build_embeddings
-
 # Run tests (si existen)
 pytest
 ```

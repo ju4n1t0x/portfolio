@@ -1,1 +1,1 @@
-# Tests package
+from .test_main import TestMain

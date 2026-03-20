@@ -24,7 +24,7 @@ describe('chatStore - currentSection state', () => {
       isTyping: false,
       sidebarOpen: true,
       contactFlowStep: null,
-      contactData: { name: undefined, email: undefined, message: undefined },
+      contactData: { name: undefined, email: undefined, consulta: undefined },
       currentSection: null,
     })
   })

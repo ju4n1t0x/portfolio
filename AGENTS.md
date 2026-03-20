@@ -38,7 +38,7 @@ When working on this project, follow these delegation rules:
 | If the task is about... | Delegate to | Documentation |
 |------------------------|-------------|---------------|
 | UI components, pages, styling | Frontend | See `portfolio/AGENTS.md` |
-| API endpoints, RAG, embeddings, AI | Backend | See `backend/AGENTS.md` |
+| API endpoints, AI | Backend | See `backend/AGENTS.md` |
 | Docker, CI/CD, deployment | DevOps | See `backend/.agents/devops.md` |
 | Code review, PR validation | Reviewer | See `backend/.agents/reviewer.md` |
 | Architecture decisions | Architect | See `backend/.agents/architect.md` |
@@ -58,7 +58,7 @@ When working on this project, follow these delegation rules:
 
 - **Framework**: FastAPI + Uvicorn
 - **Language**: Python 3.12
-- **AI**: Ollama + RAG + embeddings
+- **AI**: Ollama
 - **Validation**: Pydantic
 - **Computing**: numpy (cosine similarity)
 

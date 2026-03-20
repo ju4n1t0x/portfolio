@@ -112,8 +112,7 @@
 - [ ] **TASK-401** — Integrate `ContactForm` in rich message system  
   Handle form submission feedback as new assistant message.
 
-- [ ] **TASK-402** — Fix Resend API architecture  
-  Options: (a) Vercel/Netlify function, (b) Express backend, (c) document limitation.
+- [ ] **TASK-402** — Integrate backend `/sendEmail` endpoint
 
 ---
 
@@ -166,7 +165,7 @@ TASK-100 (SectionContent type)
   │   │
   │   └────────────────────────────── TASK-400 (wire contacto)
   │                                     └── TASK-401 (form integration)
-  │                                           └── TASK-402 (Resend fix)
+  │                                           └── TASK-402 (/sendEmail integration)
   │
   └── TASK-500 (suggestion chips) — depends on all 4 sections wired
 

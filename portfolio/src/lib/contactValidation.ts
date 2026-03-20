@@ -11,15 +11,17 @@ export const emailSchema = z
   .trim()
   .email("Email inválido")
 
-export const messageSchema = z
+export const consultaSchema = z
   .string()
   .trim()
   .min(10, "El mensaje debe tener al menos 10 caracteres")
 
+export { consultaSchema as messageSchema }
+
 export const contactSchema = z.object({
   name: nameSchema,
   email: emailSchema,
-  message: messageSchema,
+  consulta: consultaSchema,
 })
 
 export type ContactFormData = z.infer<typeof contactSchema>
@@ -58,8 +60,8 @@ export function validateEmail(input: string): ValidationResult {
   }
 }
 
-export function validateMessage(input: string): ValidationResult {
-  const result = messageSchema.safeParse(input)
+export function validateConsulta(input: string): ValidationResult {
+  const result = consultaSchema.safeParse(input)
   if (result.success) {
     return { success: true, value: result.data }
   }

@@ -1,0 +1,59 @@
+version: "2"
+type: frontend
+tech_stack:
+  - language: TypeScript
+  - framework: React 19
+  - ui_library: TailwindCSS
+  - other: Zustand, Vite
+routes:
+  - path: /
+    file: src/App.tsx
+    auth_required: false
+    description: Single-page portfolio chat UI with sidebar navigation
+features:
+  - name: AI Chat Streaming
+    description: Users send messages and receive streaming responses
+    files:
+      - src/components/organisms/ChatInterface/ChatInterface.tsx
+      - src/lib/api/chat.ts
+      - src/store/chatStore.ts
+    entry_route: /
+    user_interactions:
+      - Type a message in the chat input
+      - Send the message to receive a streaming reply
+      - Retry the last failed message
+    api_calls:
+      - method: POST
+        endpoint: /agentJuani
+    auth_required: false
+  - name: Contact Flow
+    description: Guided contact form flow inside the chat
+    files:
+      - src/components/organisms/ChatInterface/ChatInterface.tsx
+      - src/lib/api/contact.ts
+      - src/lib/contactValidation.ts
+    entry_route: /
+    user_interactions:
+      - Open Contact from sidebar or suggestions
+      - Enter name
+      - Enter email
+      - Enter message
+      - Submit and see success or error response
+    api_calls:
+      - method: POST
+        endpoint: /sendEmail
+    auth_required: false
+  - name: Sectioned Portfolio Content
+    description: Sidebar switches between About, Projects, and Experience content
+    files:
+      - src/components/organisms/Sidebar/Sidebar.tsx
+      - src/components/molecules/ProjectCard/ProjectCard.tsx
+      - src/components/molecules/ExperienceCard/ExperienceCard.tsx
+    entry_route: /
+    user_interactions:
+      - Open sidebar sections
+      - View projects cards in chat
+      - View experience cards in chat
+    api_calls: []
+    auth_required: false
+known_limitations: []

@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5173",
+  "executionArgs": {
+    "projectName": "portfolio",
+    "projectPath": "/home/juani/MiCarpetaDrive/Developer/portfolio/portfolio",
+    "testIds": [],
+    "additionalInstruction": "",
+    "serverMode": "development",
+    "envs": {
+      "API_KEY": "sk-user-a4M6RRU8JJgv0Tg2THKPzIX1081Q4oznQMxUp0aR81SuD-td-USZICzYGRH7MxK7ZQl_UhySCa6uaCfJyRtFO3uDPodnmF497O258ScDXFxFrUlg3MSYdbTt1iCZ-qw3IBc"
+    }
+  },
+  "serverPort": 43651,
+  "proxy": "http://e9474aa5-22a7-44a9-bf85-2474b0527adf:rYSg3oGhVVcgZTBDqbKbNhyrtk43xd98@tun.testsprite.com:8080"
+}

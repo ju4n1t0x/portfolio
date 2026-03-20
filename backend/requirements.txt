@@ -4,6 +4,8 @@ ollama
 numpy
 pydantic
 httpx
+python-jose[cryptography]
+python-dotenv
 
 # Testing
 pytest

@@ -39,9 +39,8 @@ store/
   └── themeStore.ts
 
 lib/
-  ├── resend.ts (email)
   └── api/
-        └── contact.ts
+        └── contact.ts (contact form API)
 ```
 
 ### Folder Structure
@@ -60,7 +59,6 @@ src/
 │   ├── chatStore.ts
 │   └── themeStore.ts
 ├── lib/
-│   ├── resend.ts
 │   └── api/
 │       └── contact.ts
 ├── hooks/

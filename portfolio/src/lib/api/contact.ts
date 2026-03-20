@@ -1,17 +1,22 @@
+import { tokenManager } from "@/lib/auth/tokenManager"
+
 interface ContactEmailData {
   name: string
   email: string
-  message: string
+  consulta: string
 }
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:8000"
+const API_BASE_URL = import.meta.env.VITE_API_URL || "/api"
 
 export async function sendContactEmail(data: ContactEmailData) {
+  const token = await tokenManager.getAccessToken()
+  
   try {
-    const response = await fetch(`${API_BASE_URL}/contact`, {
+    const response = await fetch(`${API_BASE_URL}/sendEmail`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })

@@ -31,7 +31,6 @@ CMD ["pnpm", "preview", "--host", "0.0.0.0", "--port", "5173"]
 
 | Variable | Description |
 |----------|-------------|
-| `VITE_RESEND_API_KEY` | Resend API key for email |
 | `VITE_API_URL` | Backend API URL |
 
 ## GitHub Actions
@@ -121,7 +120,6 @@ pnpm typecheck
     "react-hook-form": "^7.0",
     "zod": "^3.0",
     "@hookform/resolvers": "^3.0",
-    "resend": "^4.0",
     "lucide-react": "^0.400"
   }
 }

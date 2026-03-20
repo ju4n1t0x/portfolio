@@ -1,12 +1,13 @@
 import { cn } from "@/lib/utils"
 import type { Message } from "@/types"
-import { User, Bot } from "lucide-react"
+import { User, Bot, RefreshCw } from "lucide-react"
 
 interface ChatBubbleProps {
   message: Message
+  onRetry?: () => void
 }
 
-export function ChatBubble({ message }: ChatBubbleProps) {
+export function ChatBubble({ message, onRetry }: ChatBubbleProps) {
   const isUser = message.role === "user"
   const hasRichContent = message.richContent !== undefined
 
@@ -50,6 +51,15 @@ export function ChatBubble({ message }: ChatBubbleProps) {
                 <div className="text-foreground/90 leading-relaxed whitespace-pre-wrap">
                   {message.content}
                 </div>
+              )}
+              {message.hasError && onRetry && (
+                <button
+                  onClick={onRetry}
+                  className="mt-3 flex items-center gap-2 text-sm text-red-600 hover:text-red-700 transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  Reintentar
+                </button>
               )}
             </div>
           </div>

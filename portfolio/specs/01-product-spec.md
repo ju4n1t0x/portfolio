@@ -30,7 +30,7 @@ Developers reviewing technical capabilities.
 1. **Chat Interface Navigation** — ChatGPT-style conversational UI
 2. **Projects Showcase** — Display portfolio projects in chat
 3. **Technical Case Study** — Detailed project information per project
-4. **Contact Form** — Email delivery via Resend API
+4. **Contact Form** — Email delivery via backend endpoint
 5. **Responsive UI** — Mobile-first design
 
 ## Frontend Stack
@@ -43,7 +43,7 @@ Developers reviewing technical capabilities.
 | State | Zustand 5 |
 | Styling | TailwindCSS + Shadcn |
 | Forms | react-hook-form + Zod |
-| Email | Resend API |
+| Email | Backend /sendEmail |
 
 ## State Management
 

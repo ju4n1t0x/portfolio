@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState, useCallback } from "react"
 import { useChatStore } from "@/store/chatStore"
 import { ChatBubble } from "../../molecules/ChatBubble/ChatBubble"
 import { ChatInput } from "../../molecules/ChatInput/ChatInput"
@@ -12,7 +12,7 @@ import {
   nameSchema,
 } from "@/lib/contactValidation"
 import { sendContactEmail } from "@/lib/api/contact"
-import { sendChatMessage } from "@/lib/api/chat"
+import { streamChatMessage } from "@/lib/api/chat"
 import { projects } from "@/data/projects"
 import { experiences } from "@/data/experiences"
 import {
@@ -153,8 +153,15 @@ export function ChatInterface() {
     resetContactFlow,
     startContactFlow,
     currentSection,
+    setCurrentSection,
+    startStreamingMessage,
+    appendToStreamingMessage,
+    markMessageAsError,
   } = useChatStore()
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  
+  // Track last user message for retry functionality
+  const [lastUserMessage, setLastUserMessage] = useState<string>("")
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -164,10 +171,35 @@ export function ChatInterface() {
     scrollToBottom()
   }, [messages])
 
+  // Stream message to backend
+  const sendStreamingMessage = useCallback(
+    (message: string) => {
+      setTyping(true)
+      const messageId = startStreamingMessage("")
+
+      streamChatMessage(message, (chunk) => {
+        appendToStreamingMessage(messageId, chunk)
+      })
+        .catch((error: Error) => {
+          console.error("Chat API error:", error)
+          markMessageAsError(messageId)
+          // Show user-friendly error message
+          const errorMsg = error.message.includes("Failed to fetch") || error.message.includes("net::")
+            ? "\n\nNo pude conectar con el servidor. Verificá que esté corriendo e intentá de nuevo."
+            : "\n\nOcurrió un error. Por favor, intentá de nuevo."
+          appendToStreamingMessage(messageId, errorMsg)
+        })
+        .finally(() => {
+          setTyping(false)
+        })
+    },
+    [setTyping, startStreamingMessage, appendToStreamingMessage, markMessageAsError]
+  )
+
   const handleSend = (input: string) => {
     addMessage({ role: "user", content: input })
 
-    if (contactFlowStep !== null) {
+    if (contactFlowStep !== null && currentSection === "contact") {
       switch (contactFlowStep) {
         case "name": {
           const result = nameSchema.safeParse(input)
@@ -220,10 +252,11 @@ export function ChatInterface() {
         case "message": {
           const result = messageSchema.safeParse(input)
           if (result.success) {
+            setContactData({ consulta: result.data })
             const finalData = {
               name: contactData.name ?? "",
               email: contactData.email ?? "",
-              message: result.data,
+              consulta: result.data,
             }
             const finalParse = contactSchema.safeParse(finalData)
             if (!finalParse.success) {
@@ -277,25 +310,19 @@ export function ChatInterface() {
         }
       }
     } else {
-      // Regular AI chat with section context
-      setTyping(true)
-      sendChatMessage(input, currentSection)
-        .then((response) => {
-          addMessage({
-            role: "assistant",
-            content: response.response,
-          })
-        })
-        .catch((error) => {
-          console.error("Chat API error:", error)
-          addMessage({
-            role: "assistant",
-            content: "Lo siento, hubo un error al procesar tu mensaje. Por favor, intentá de nuevo.",
-          })
-        })
-        .finally(() => {
-          setTyping(false)
-        })
+      if (contactFlowStep !== null && currentSection !== "contact") {
+        resetContactFlow()
+      }
+      // Regular AI chat with streaming
+      setLastUserMessage(input) // Save for retry
+      sendStreamingMessage(input)
+    }
+  }
+
+  // Retry last failed message
+  const handleRetry = () => {
+    if (lastUserMessage) {
+      sendStreamingMessage(lastUserMessage)
     }
   }
 
@@ -310,6 +337,7 @@ export function ChatInterface() {
         content: contactFlowIntro,
         contentType: "contact",
       })
+      setCurrentSection("contact")
       startContactFlow()
     })
   }
@@ -348,7 +376,10 @@ export function ChatInterface() {
                     </div>
                   </div>
                 )}
-                <ChatBubble message={message} />
+                <ChatBubble 
+                  message={message} 
+                  onRetry={message.hasError ? handleRetry : undefined} 
+                />
               </div>
             )
           })}
@@ -360,19 +391,22 @@ export function ChatInterface() {
                     <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
                       <span className="text-xs font-semibold">JI</span>
                     </div>
-                    <div className="flex gap-1 items-center pt-2">
-                      <span
-                        className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                        style={{ animationDelay: "0ms" }}
-                      />
-                      <span
-                        className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                        style={{ animationDelay: "150ms" }}
-                      />
-                      <span
-                        className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                        style={{ animationDelay: "300ms" }}
-                      />
+                    <div className="flex flex-col gap-1">
+                      <span className="text-xs text-muted-foreground">Escribiendo...</span>
+                      <div className="flex gap-1 items-center">
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                          style={{ animationDelay: "0ms" }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                          style={{ animationDelay: "150ms" }}
+                        />
+                        <span
+                          className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                          style={{ animationDelay: "300ms" }}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -393,8 +427,7 @@ export function ChatInterface() {
       {/* Input */}
       <ChatInput 
         onSend={handleSend} 
-        disabled={isTyping || currentSection === "contact"} 
-        disabledMessage={currentSection === "contact" ? "Chat deshabilitado en la sección Contacto" : undefined}
+        disabled={isTyping}
       />
     </div>
   )

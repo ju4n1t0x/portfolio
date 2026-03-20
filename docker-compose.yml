@@ -7,8 +7,6 @@ services:
     depends_on:
       - frontend
       - backend
-    networks:
-      - internal
 
   backend:
     build:
@@ -28,8 +26,6 @@ services:
           memory: 3G
         reservations:
           memory: 1G
-    networks:
-      - internal
 
   frontend:
     build:
@@ -47,9 +43,3 @@ services:
           memory: 512M
         reservations:
           memory: 128M
-    networks:
-      - internal
-
-networks:
-  internal:
-    internal: true

@@ -1,11 +1,15 @@
+import { useState } from "react"
 import type { Project } from "@/types"
-import { ExternalLink, Github } from "lucide-react"
+import { ExternalLink, Github, Maximize2 } from "lucide-react"
+import { ImageModal } from "@/components/atoms"
 
 interface ProjectCardProps {
   project: Project
 }
 
 export function ProjectCard({ project }: ProjectCardProps) {
+  const [modalImage, setModalImage] = useState<string | URL | null>(null)
+
   return (
     <div className="space-y-3">
       {/* Title */}
@@ -34,13 +38,19 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {project.images.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pt-1 pb-1 scrollbar-thin">
           {project.images.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt={`${project.title} preview ${index + 1}`}
-              className="rounded-lg border border-border/40 object-cover h-36 w-auto flex-shrink-0"
-              loading="lazy"
-            />
+            <div key={index} className="relative group flex-shrink-0">
+              <img
+                src={typeof img === "string" ? img : img.toString()}
+                alt={`${project.title} preview ${index + 1}`}
+                className="rounded-lg border border-border/40 object-cover h-36 w-auto cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+                loading="lazy"
+                onClick={() => setModalImage(img)}
+              />
+              {/* Hover overlay with expand icon - pointer-events-none so clicks pass through to img */}
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center pointer-events-none">
+                <Maximize2 className="w-6 h-6 text-white" />
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -72,6 +82,14 @@ export function ProjectCard({ project }: ProjectCardProps) {
           )}
         </div>
       )}
+
+      {/* Image Modal */}
+      <ImageModal
+        src={modalImage || ""}
+        alt={`${project.title} preview`}
+        isOpen={!!modalImage}
+        onClose={() => setModalImage(null)}
+      />
     </div>
   )
 }

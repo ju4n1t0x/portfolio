@@ -3,41 +3,32 @@ import type { Experience } from "@/types"
 export const experiences: Experience[] = [
   {
     id: "1",
-    company: "Globant",
-    role: "Senior Full Stack Developer",
-    period: { start: "2023", end: "Presente" },
+    company: "Xinergia",
+    role: "Backend Developer",
+    period: { start: "2025", end: "Presente" },
     description:
-      "Desarrollo de aplicaciones web a gran escala para clientes internacionales. Liderazgo técnico de un equipo de 5 desarrolladores, definición de arquitectura frontend y revisión de código. Implementación de CI/CD pipelines y mejora de performance con lazy loading y code splitting.",
-    technologies: ["React", "TypeScript", "Node.js", "AWS", "Docker", "GraphQL"],
-    companyUrl: "https://www.globant.com",
+      "Migración y modernización de API REST legacy de PHP 5 a PHP 8.3 con Laravel 12 para institución educativa. Diseño de endpoints RESTful con autenticación basada en clave pública/privada. Implementación de mejoras funcionales para aumentar competitividad en el mercado.",
+    technologies: ["PHP 8.3", "Laravel 12", "JWT", "MySQL", "Bruno"],
+    companyUrl: "https://www.xinergia.com",
   },
   {
     id: "2",
-    company: "MercadoLibre",
+    company: "SteelMat",
     role: "Full Stack Developer",
-    period: { start: "2021", end: "2023" },
+    period: { start: "2025", end: "2026" },
     description:
-      "Desarrollo y mantenimiento de microservicios para el flujo de checkout y pagos. Integración con APIs de terceros y optimización de consultas a bases de datos. Participación activa en ceremonias ágiles y mentoring de desarrolladores junior.",
-    technologies: ["React", "Java", "Spring Boot", "MySQL", "Redis", "Kafka"],
-    companyUrl: "https://www.mercadolibre.com",
+      "Desarrollo integral de sitio web corporativo para empresa de construcción en seco. Gestión de migración de hosting y configuración de servicio de mailing corporativo con dominio propio.",
+    technologies: ["Astro", "TypeScript", "Resend", "Tailwind CSS"],
+    companyUrl: "https://www.steelmat.com.ar",
   },
   {
     id: "3",
-    company: "Accenture",
-    role: "Frontend Developer",
-    period: { start: "2019", end: "2021" },
+    company: "UTN - Facultad Regional Santa Fe",
+    role: "Tutor Académico",
+    period: { start: "2025", end: "Presente" },
     description:
-      "Desarrollo de interfaces de usuario para aplicaciones empresariales del sector bancario. Migración de aplicaciones legacy a React con TypeScript. Implementación de design systems y componentes reutilizables con Storybook.",
-    technologies: ["React", "TypeScript", "Redux", "Sass", "Storybook", "Jest"],
-    companyUrl: "https://www.accenture.com",
-  },
-  {
-    id: "4",
-    company: "Freelance",
-    role: "Web Developer",
-    period: { start: "2017", end: "2019" },
-    description:
-      "Desarrollo de sitios web y aplicaciones para pequeñas y medianas empresas. Diseño responsivo, integración con CMS y optimización SEO. Gestión directa con clientes, desde relevamiento de requerimientos hasta deploy en producción.",
-    technologies: ["JavaScript", "HTML/CSS", "WordPress", "PHP", "Firebase"],
+      "Tutor en la Tecnicatura Universitaria en Tecnologías de la Información. Acompañamiento académico a estudiantes en las asignaturas Diseño de Sistemas de Información y Desarrollo de Sitios Web. Apoyo en resolución de trabajos prácticos, refuerzo de conceptos teóricos y mentoría en buenas prácticas de desarrollo.",
+    technologies: ["UML", "Diagramas de flujo", "HTML", "CSS", "JavaScript"],
+    companyUrl: "https://www.frsf.utn.edu.ar",
   },
 ]

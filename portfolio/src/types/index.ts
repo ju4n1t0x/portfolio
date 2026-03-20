@@ -21,7 +21,7 @@ export interface Project {
   technologies: string[]
   repoUrl?: string
   projectUrl?: string
-  images: string[]
+  images: (string | URL)[]
 }
 
 // --- Experience data model ---

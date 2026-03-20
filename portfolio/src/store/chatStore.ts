@@ -1,6 +1,19 @@
 import { create } from "zustand"
 import type { ChatState, ThemeState } from "../types"
 
+// Fallback for browsers that don't support crypto.randomUUID
+const generateId = (): string => {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID()
+  }
+  // Fallback: generate a UUID-like string
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0
+    const v = c === "x" ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
 const initialContactData = { name: undefined, email: undefined, consulta: undefined }
 
 export const useChatStore = create<ChatState>((set) => ({
@@ -17,7 +30,7 @@ export const useChatStore = create<ChatState>((set) => ({
         ...state.messages,
         {
           ...message,
-          id: crypto.randomUUID(),
+          id: generateId(),
           timestamp: new Date(),
         },
       ],
@@ -45,7 +58,7 @@ export const useChatStore = create<ChatState>((set) => ({
 
   // Streaming message actions
   startStreamingMessage: (content: string) => {
-    const id = crypto.randomUUID()
+    const id = generateId()
     set((state) => ({
       messages: [
         ...state.messages,

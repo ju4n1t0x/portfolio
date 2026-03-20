@@ -21,6 +21,8 @@ RUN pnpm build
 # Production stage - serve with nginx
 FROM nginx:alpine AS production
 
+RUN apk add --no-cache wget
+
 # Copy built files
 COPY --from=builder /app/dist /usr/share/nginx/html
 

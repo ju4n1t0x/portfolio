@@ -37,31 +37,23 @@ export function Sidebar() {
   const { theme, toggleTheme } = useThemeStore()
   const isDesktop = useIsDesktop("md")
   
-  // Track if we've passed initial mount and what viewport we had
-  const wasDesktop = useRef(false)
+  // Track if we've passed initial mount
   const isInitialMount = useRef(true)
   
-  // Only auto-close on breakpoint change FROM desktop TO mobile
-  // Don't close on initial mount - let the viewport determine visibility
+  // Close sidebar on mobile (either initial or after resize)
   useEffect(() => {
-    // Skip initial mount - this runs after first render, viewport is already set
+    // On initial mount with mobile viewport, close sidebar
     if (isInitialMount.current) {
       isInitialMount.current = false
-      // Set initial desktop state
-      if (isDesktop) {
-        wasDesktop.current = true
+      if (!isDesktop && sidebarOpen) {
+        setSidebarOpen(false)
       }
       return
     }
     
-    // If we were desktop and now we're mobile, close the sidebar
-    if (wasDesktop.current && !isDesktop && sidebarOpen) {
+    // On resize from desktop to mobile, close sidebar
+    if (!isDesktop && sidebarOpen) {
       setSidebarOpen(false)
-    }
-    
-    // Update reference for next comparison
-    if (isDesktop) {
-      wasDesktop.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDesktop])

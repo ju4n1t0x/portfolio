@@ -40,7 +40,10 @@ yarn-debug.log*
 pnpm-debug.log*
 
 # Docker volumes data (generated at runtime)
-data/
+/data/
+
+# Portfolio source data (must be tracked)
+!portfolio/src/data/
 
 # AI Agent Memory (session-specific, not for repo)
 .engram/

@@ -1,0 +1,2 @@
+export const aboutResponse =
+  "Soy Juan Ignacio, técnico universitario en Tecnologías de la Información (UTN) y estudiante de la Licenciatura en Ciencia de Datos (UGR). Me desempeño como desarrollador full stack con enfoque en crear soluciones web modernas y eficientes. Tengo disponibilidad para trabajar de forma remota, presencial o híbrida, y estoy interesado en proyectos que combinen desarrollo frontend y backend con impacto real."

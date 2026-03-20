@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from "react"
 import { useChatStore } from "@/store/chatStore"
 import { ChatBubble } from "../../molecules/ChatBubble/ChatBubble"
 import { ChatInput } from "../../molecules/ChatInput/ChatInput"
-import { PanelLeft } from "lucide-react"
+import { PanelLeft, Mail } from "lucide-react"
 import {
   contactSchema,
   emailSchema,
@@ -61,6 +61,13 @@ function WelcomeScreen({
         <p className="text-lg text-muted-foreground leading-relaxed">
           Desarrollador Full Stack. Te invito a chatear conmigo y conocerme.
         </p>
+        <a 
+          href="mailto:contacto@juansasia.com"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <Mail className="w-4 h-4" />
+          contacto@juansasia.com
+        </a>
         <div className="flex flex-wrap justify-center gap-2 pt-4">
           {suggestions.map((suggestion) => (
               <button
@@ -295,9 +302,14 @@ export function ChatInterface() {
             <PanelLeft className="w-5 h-5" />
           </button>
         )}
-        <span className="text-sm font-medium text-foreground">
+        <a 
+          className="text-sm font-medium text-foreground"
+          href="https://juanignaciosasia.com"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           Juan Ignacio Sasia
-        </span>
+        </a>
       </div>
 
       {/* Chat area */}

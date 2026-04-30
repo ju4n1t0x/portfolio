@@ -59,7 +59,7 @@ function WelcomeScreen({
           Hola, soy Juan Ignacio.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Desarrollador Full Stack. Te invito a chatear conmigo y conocerme.
+          Desarrollador Backend formándome en Data Engineering y Ciencia de Datos.
         </p>
         <a 
           href="mailto:contacto@juansasia.com"

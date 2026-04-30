@@ -9,7 +9,7 @@
 
 ## Perfil Profesional
 
-Desarrollador Full Stack con experiencia en el desarrollo de aplicaciones web completas, desde el diseño de interfaces hasta la implementación de APIs backend. Combina conocimientos en múltiples tecnologías del frontend y backend, con un enfoque en la calidad del código, arquitectura escalable y buenas prácticas de desarrollo.
+Desarrollador Backend con sólida experiencia en el desarrollo de APIs robustas y sistemas escalables. Actualmente me estoy formando en Data Engineering y Ciencia de Datos, ampliando mi perfil hacia el procesamiento y análisis de datos.
 
 Orientado al aprendizaje continuo y a la mejora constante. Perfil proactivo con experiencia en entornos corporativos, trabajo en equipo y comunicación efectiva.
 
@@ -28,7 +28,13 @@ Orientado al aprendizaje continuo y a la mejora constante. Perfil proactivo con 
 - Testing de APIs: Bruno, Postman
 - Emails transaccionales: Resend
 - Metodologías: Agile/Scrum, Clean Code, SOLID
-- Diseño responsive y UX'
+
+### Data Engineering y Ciencia de Datos
+
+- Python (pandas, numpy)
+- SQL (consultas avanzadas, PostgreSQL, MySQL)
+- Jupyter Notebooks
+- Análisis de datos y visualización
 
 ## Proyectos Destacados
 

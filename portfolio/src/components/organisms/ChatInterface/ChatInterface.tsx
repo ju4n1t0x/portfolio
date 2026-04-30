@@ -59,7 +59,10 @@ function WelcomeScreen({
           Hola, soy Juan Ignacio.
         </h1>
         <p className="text-lg text-muted-foreground leading-relaxed">
-          Desarrollador Backend formándome en Data Engineering y Ciencia de Datos.
+          Desarrollador Backend.
+        </p>
+        <p className="text-md text-muted-foreground leading-relaxed">
+          Formándome en Data Engineering y Ciencia de Datos.
         </p>
         <a 
           href="mailto:contacto@juansasia.com"

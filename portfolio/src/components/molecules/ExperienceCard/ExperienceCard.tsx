@@ -52,7 +52,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
             className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
-            Sitio web
+            Sitio web de la empresa
           </a>
         </div>
       )}

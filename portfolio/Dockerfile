@@ -19,7 +19,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage - serve with nginx
-FROM nginx:alpine AS production
+FROM nginx:1.30.1-alpine AS production
 
 RUN apk add --no-cache wget
 

@@ -1,0 +1,57 @@
+strict_tdd: true
+context: |
+  portfolio is a Node.js/TypeScript ESM, React, Python project.
+  Detected markers: portfolio/package.json, portfolio/tsconfig.json, portfolio/pnpm package manager.
+  Package managers: pnpm.
+  Additional evidence: Test-like files detected (503); examples: backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/_locales.py, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/_natype.py, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/astype_copy.pkl, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/generate_umath_validation_data.cpp, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/recarray_from_file.fits.
+  Primary test command: pytest.
+  Unit tests: pytest (pytest).
+  Integration tests: none.
+  E2E tests: none.
+rules:
+  proposal:
+    require_problem_statement: true
+  spec:
+    require_acceptance_criteria: true
+  design:
+    require_tradeoffs: true
+  tasks:
+    protect_review_workload: true
+  apply:
+    test_command: "pytest"
+  verify:
+    test_command: "pytest"
+testing:
+  detected: "2026-05-18"
+  runner:
+    command: "pytest"
+    framework: "pytest"
+  layers:
+    unit: "pytest"
+    integration: ""
+    e2e: ""
+  commands:
+    unit:
+      - scope: "."
+        command: "pytest"
+        framework: "pytest"
+    integration:
+      []
+    e2e:
+      []
+  coverage:
+    command: ""
+    commands:
+      []
+quality:
+  lint: "cd portfolio && pnpm run lint"
+  lint_commands:
+    - scope: "portfolio"
+      command: "cd portfolio && pnpm run lint"
+      framework: "linter"
+  typecheck: ""
+  typecheck_commands:
+    []
+  format: ""
+  format_commands:
+    []

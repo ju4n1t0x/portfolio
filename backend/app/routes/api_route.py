@@ -15,7 +15,7 @@ def get_agent_controller():
 def get_email_controller():
     return SendEmailController()
 
-@api_route.post("/agentJuani")
+@api_route.post("/api/agentJuani")
 def agent_juani(
     data: Answer,
     controller: AgentJuaniController = Depends(get_agent_controller),

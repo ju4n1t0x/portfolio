@@ -7,17 +7,17 @@ export const experiences: Experience[] = [
     role: "Backend Developer",
     period: { start: "2025", end: "Presente" },
     description:
-      "Migración y modernización de API REST legacy de PHP 5 a PHP 8.3 con Laravel 12 para institución educativa. Diseño de endpoints RESTful con autenticación basada en clave pública/privada. Implementación de mejoras funcionales para aumentar competitividad en el mercado.",
-    technologies: ["PHP 8.3", "Laravel 12", "JWT", "MySQL", "Bruno"],
+      "Desarrollo y mantenimiento de APIs REST y servicios backend para plataforma e-learning. Integración con servicios externos: CRMs, ERPs y pasarelas de pago. Modelado y optimización de bases de datos relacionales (PostgreSQL, MySQL). Implementación de pipelines CI/CD y enfoque API-first. Arquitectura por capas con separación Controllers/Services y principios SOLID.",
+    technologies: ["Laravel 12", "PHP 8.3", "PostgreSQL", "MySQL", "REST API", "CI/CD", "SOLID"],
     companyUrl: "https://www.xinergia.com",
   },
   {
     id: "2",
     company: "SteelMat",
-    role: "Full Stack Developer",
-    period: { start: "2025", end: "2026" },
+    role: "Web Developer",
+    period: { start: "04/2025", end: "10/2025" },
     description:
-      "Desarrollo integral de sitio web corporativo para empresa de construcción en seco. Gestión de migración de hosting y configuración de servicio de mailing corporativo con dominio propio.",
+      "Desarrollo integral de sitio web corporativo para empresa de construcción en seco. Implementación de emails transaccionales con Resend, migración de hosting, configuración de dominio y DNS en Vercel, y optimización SEO para posicionamiento local.",
     technologies: ["Astro", "TypeScript", "Resend", "Tailwind CSS"],
     companyUrl: "https://www.steelmat.com.ar",
   },

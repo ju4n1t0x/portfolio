@@ -1,13 +1,18 @@
 strict_tdd: true
 context: |
-  portfolio is a Node.js/TypeScript ESM, React, Python project.
-  Detected markers: portfolio/package.json, portfolio/tsconfig.json, portfolio/pnpm package manager.
-  Package managers: pnpm.
-  Additional evidence: Test-like files detected (503); examples: backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/_locales.py, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/_natype.py, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/astype_copy.pkl, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/generate_umath_validation_data.cpp, backend/.venv/lib/python3.12/site-packages/numpy/_core/tests/data/recarray_from_file.fits.
-  Primary test command: pytest.
-  Unit tests: pytest (pytest).
-  Integration tests: none.
-  E2E tests: none.
+  portfolio is a monorepo with frontend (React 19 + Vite + TypeScript) and backend (Python 3.12 + FastAPI + Ollama RAG).
+  Backend stack: FastAPI, Uvicorn, Pydantic, Ollama (qwen2.5:0.5b), numpy (cosine similarity), python-jose (JWT), httpx, openai, resend.
+  Architecture: Controller-Service-Model with dependency injection, CORS middleware, JWT auth middleware.
+  Backend test runner: pytest with FastAPI TestClient.
+  Frontend package manager: pnpm.
+  Primary backend test command: pytest (run from backend/).
+  Unit tests: pytest (fastapi.testclient.TestClient).
+  Integration tests: none configured.
+  E2E tests: none configured.
+  Coverage tool: not configured (pytest-cov not in requirements.txt).
+  Linter: not configured for backend (frontend uses pnpm lint).
+  Type checker: not configured for backend (frontend uses TypeScript strict).
+  Formatter: not configured.
 rules:
   proposal:
     require_problem_statement: true
@@ -18,31 +23,48 @@ rules:
   tasks:
     protect_review_workload: true
   apply:
-    test_command: "pytest"
+    test_command: "cd backend && pytest"
   verify:
-    test_command: "pytest"
+    test_command: "cd backend && pytest"
 testing:
-  detected: "2026-05-18"
-  runner:
-    command: "pytest"
-    framework: "pytest"
-  layers:
-    unit: "pytest"
-    integration: ""
-    e2e: ""
-  commands:
-    unit:
-      - scope: "."
+  detected: "2026-06-03"
+  backends:
+    backend:
+      runner:
         command: "pytest"
         framework: "pytest"
-    integration:
-      []
-    e2e:
-      []
-  coverage:
-    command: ""
-    commands:
-      []
+        test_client: "fastapi.testclient.TestClient"
+      layers:
+        unit: "pytest"
+        integration: ""
+        e2e: ""
+      commands:
+        unit:
+          - scope: "backend/"
+            command: "cd backend && pytest"
+            framework: "pytest"
+        integration: []
+        e2e: []
+      coverage:
+        command: ""
+        commands: []
+      test_files:
+        - "backend/tests/test_main.py"
+    frontend:
+      runner:
+        command: ""
+        framework: ""
+      layers:
+        unit: ""
+        integration: ""
+        e2e: ""
+      commands:
+        unit: []
+        integration: []
+        e2e: []
+      coverage:
+        command: ""
+        commands: []
 quality:
   lint: "cd portfolio && pnpm run lint"
   lint_commands:
@@ -50,8 +72,6 @@ quality:
       command: "cd portfolio && pnpm run lint"
       framework: "linter"
   typecheck: ""
-  typecheck_commands:
-    []
+  typecheck_commands: []
   format: ""
-  format_commands:
-    []
+  format_commands: []

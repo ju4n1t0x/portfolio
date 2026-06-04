@@ -21,7 +21,7 @@ export function useMediaQuery(query: string): boolean {
     }
 
     // Set initial value (in case it changed since mount)
-    setMatches(mediaQuery.matches)
+    // NOTE: Already handled by lazy initializer in useState above
 
     // Modern API (addEventListener)
     if (mediaQuery.addEventListener) {

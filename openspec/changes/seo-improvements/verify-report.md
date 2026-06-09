@@ -14,91 +14,84 @@
 ### Build & Tests Execution
 **Node**: `v18.20.8`
 
-**Type check requested by task**: ✅ Command passed
-```text
-$ pnpm exec tsc --noEmit
-(no output)
-```
-
-**App type check (effective)**: ❌ Failed
+**Requested app type check**: ✅ Passed
 ```text
 $ pnpm exec tsc --noEmit -p tsconfig.app.json
-src/components/organisms/ChatInterface/ChatInterface.tsx(385,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(444,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(503,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(562,10): error TS1005: ':' expected.
+tsc-app-ok
 ```
 
-**Build**: ❌ Failed
+**Build**: ⚠️ Environment-limited failure
 ```text
 $ pnpm run build
-src/components/organisms/ChatInterface/ChatInterface.tsx(385,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(444,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(503,10): error TS1005: ':' expected.
-src/components/organisms/ChatInterface/ChatInterface.tsx(562,10): error TS1005: ':' expected.
+You are using Node.js 18.20.8. Vite requires Node.js version 20.19+ or 22.12+.
+ReferenceError: CustomEvent is not defined
 ```
 
-**Tests**: ⚠️ No runnable SEO runtime tests
+**Runtime tests**: ⚠️ Not available in workspace
 ```text
 package.json has no test script.
-Detected test file: src/store/chatStore.test.ts
-No runtime SEO verification path exists in this workspace.
+No runnable SEO runtime verification path exists for this change.
 ```
 
 **Coverage**: ➖ Not available
 
 ### Spec Compliance Matrix
-| Requirement | Evidence | Runtime proof | Result |
-|-------------|----------|---------------|--------|
-| robots.txt crawl directives | `public/robots.txt` contains `User-agent: *`, `Allow: /`, `Sitemap: https://juansasia.com/sitemap.xml` | None | ✅ STATIC PASS |
-| XML sitemap generation | `public/sitemap.xml` parses and contains root/projects/experience/contact URLs with `changefreq` and `priority` | None | ✅ STATIC PASS |
-| Favicon asset replacement | Source `index.html` references `/favicon.png` and `/apple-touch-icon.png`; no source `/favicon.ico` reference | None | ✅ STATIC PASS |
-| Social preview meta completeness | `SEO.tsx` emits canonical, robots, OG, and Twitter meta fields | None | ✅ STATIC PASS |
-| Person JSON-LD expansion | `buildPersonSchema()` includes `name`, `jobTitle`, `url`, `image`, `description`, `sameAs` | None | ✅ STATIC PASS |
-| WebSite JSON-LD schema | `buildWebSiteSchema()` includes `name`, `url`, `description` and `SEO.tsx` emits one `@graph` block | None | ✅ STATIC PASS |
-| Project CreativeWork JSON-LD | `buildCreativeWorkSchema()` includes `name`, `description`, fallback `url`, `author`, `keywords` | None | ✅ STATIC PASS |
-| Experience Organization JSON-LD | `buildItemListSchema()` emits `OrganizationRole` items with normalized dates and `worksFor` | None | ✅ STATIC PASS |
-| Semantic HTML landmarks | `App.tsx` has `<main>`, `Sidebar.tsx` has labeled `<nav>`, `ChatInterface.tsx` has labeled sections and header | None | ✅ STATIC PASS |
-| Heading hierarchy | Source now renders one `WelcomeScreen` with one `h1`; all four sections contain one `h2` each | None | ✅ STATIC PASS |
-| Image alt text quality | Hero image and project previews have descriptive `alt`; cards use `<article>` | None | ✅ STATIC PASS |
-| Static crawlable content surface | `public/portfolio-content.json` exists and validates with `projects`, `experience`, `contact` content | None | ✅ STATIC PASS |
-| Crawlable data mapping consistency | Projects and experiences map correctly from source data; top-level person/contact metadata in generator remains hardcoded | None | ⚠️ PARTIAL |
+| Requirement / Scenario | Evidence | Runtime proof | Result |
+|------------------------|----------|---------------|--------|
+| robots.txt serves crawl directives and sitemap | `public/robots.txt:1-10` contains `User-agent: *`, `Allow: /`, GPTBot, Google-Extended, and `Sitemap:` | None | ✅ STATIC PASS |
+| sitemap.xml is valid and includes canonical section URLs | `public/sitemap.xml:1-23` parses as XML and includes `/`, `?section=projects`, `?section=experience`, `?section=contact` with `changefreq` and `priority` | None | ✅ STATIC PASS |
+| favicon links exist and dead `/favicon.ico` reference is removed | `index.html:6-7` points to `/favicon.png` and `/apple-touch-icon.png`; no `/favicon.ico` source reference found | None | ✅ STATIC PASS |
+| social preview meta completeness | `SEO.tsx:57-73` has canonical/OG/Twitter core tags, but no `og:image:alt` or `twitter:image:alt` | None | ❌ FAIL |
+| Person JSON-LD includes required fields | `serializers.ts:50-62`, `SEO.tsx:35-43` populate `name`, `jobTitle`, `url`, `image`, `description`, `sameAs`, `knowsAbout` | None | ✅ STATIC PASS |
+| WebSite JSON-LD includes description and references Person | `serializers.ts:65-66` includes `description`, but no `author`/`publisher` reference is emitted | None | ❌ FAIL |
+| CreativeWork JSON-LD includes fallback URL and author | `serializers.ts:69-80` sets fallback `url`, `author`, and `keywords` | None | ✅ STATIC PASS |
+| CreativeWork JSON-LD includes required image field | `serializers.ts:71-80` never writes `image` | None | ❌ FAIL |
+| Experience structured data omits `Presente` end dates | `serializers.ts:33-38,85-91` omits `endDate` when value is `Presente` | None | ✅ STATIC PASS |
+| Invalid `MM/YYYY` dates are dropped | `serializers.ts:21-37` extracts the year from `04/2025` / `10/2025` instead of dropping the invalid format | None | ❌ FAIL |
+| Initial DOM contains one `h1` and section `h2`s | `ChatInterface.tsx:33-88,375-404` shows one hero `h1` and four hidden section `h2`s | None | ✅ STATIC PASS |
+| Hidden sections remain crawlable in DOM | `ChatInterface.tsx:392-404` keeps all four `<section>` nodes in DOM via CSS hiding | None | ✅ STATIC PASS |
+| Static crawlable JSON exists from source data | `public/portfolio-content.json:39-94` contains 4 projects and 3 experiences; parse succeeded | None | ✅ STATIC PASS |
+| Single source of truth / no manual duplication | `generate-seo-assets.mjs:228-273` still hardcodes top-level person/contact metadata | None | ⚠️ PARTIAL |
 
 ### Correctness (Static Evidence)
 | Check | Status | Notes |
 |------|--------|-------|
-| Exactly one `h1` in source | ✅ | `WelcomeScreen` is rendered once at `ChatInterface.tsx:319-326` |
-| Four section `h2` headings | ✅ | `ChatInterface.tsx:329-330, 388-389, 447-448, 506-507` |
-| WebSite `description` present | ✅ | `src/lib/seo/serializers.ts:65-66,105` |
-| CreativeWork `author` present | ✅ | `src/lib/seo/serializers.ts:69-80` |
-| Static JSON parses | ✅ | `public/portfolio-content.json` parsed successfully; 4 projects, 3 experiences |
-| Sitemap parses | ✅ | `public/sitemap.xml` parsed successfully; 4 URLs |
-| Static assets exist | ✅ | `favicon.png`, `apple-touch-icon.png`, `robots.txt`, `sitemap.xml`, `og-image.svg` exist |
-| ChatInterface compiles | ❌ | JSX ternaries are incomplete in all four sections, causing TS1005 parse errors |
+| Exactly one `h1` | ✅ | `ChatInterface.tsx:58` is the only matched `<h1>` |
+| Four section `h2` headings | ✅ | `ChatInterface.tsx:394,397,400,403` |
+| WebSite `description` present | ✅ | `serializers.ts:65-66,105` |
+| CreativeWork `author` present | ✅ | `serializers.ts:76` |
+| DRY message list implementation | ✅ | One `renderMessageList()` helper and one `messages.map(...)` call in `ChatInterface.tsx:295-348` |
+| Static JSON parses | ✅ | Parsed successfully; `projects=4`, `experience=3` |
+| Sitemap parses | ✅ | XML parse succeeded |
+| PNG assets exist | ✅ | `favicon.png` and `apple-touch-icon.png` are valid PNG files |
+| Icon sizes match spec/design intent | ⚠️ | Both PNGs are `1024x1065`; spec/design called for dedicated `32x32` favicon and `180x180` touch icon |
 
 ### Coherence (Design)
 | Decision | Followed? | Notes |
 |----------|-----------|-------|
-| Shared SEO serializer utilities | ✅ Yes | `constants.ts` + `serializers.ts` centralize schema mapping |
-| Static JSON from source data | ⚠️ Partial | `projects` and `experience` derive from source; top-level person/contact metadata is still duplicated in `generate-seo-assets.mjs` |
-| Semantic sections with valid hierarchy | ✅ In source | Source structure now satisfies the single-`h1` and per-section-`h2` intent |
-| No new dependency approach | ✅ Yes | No extra runtime dependency added |
+| Shared SEO serializer utilities | ✅ Yes | `constants.ts` + `serializers.ts` centralize mapping logic |
+| Static JSON from canonical source data | ⚠️ Partial | Projects/experience are derived from source, but top-level metadata remains duplicated in generator |
+| Semantic sections with valid hierarchy | ✅ Yes | Single hero `h1`; crawler-visible section landmarks retained in DOM |
+| No new dependency approach | ✅ Yes | Verification found no added dependency for SEO work |
 
 ### Issues Found
 **CRITICAL**
-- `ChatInterface.tsx` does not compile. Each section contains an incomplete ternary expression (`{hasMessages ? (...)}` without an `: ...` fallback), producing TS1005 errors at lines 385, 444, 503, and 562. This blocks both `pnpm exec tsc --noEmit -p tsconfig.app.json` and `pnpm run build`.
+- `SEO.tsx` does not emit `og:image:alt` or `twitter:image:alt` even though the discoverability spec requires accessible social image alt metadata.
+- `buildWebSiteSchema()` still omits the required `author` or `publisher` reference to the Person node.
+- `buildCreativeWorkSchema()` still omits the required `image` field for each project schema node.
+- Date normalization does not satisfy the structured-data spec for invalid `MM/YYYY` values: `normalizeExperienceDates()` / `normalizeEndDate()` extract the year from `04/2025` and `10/2025` instead of dropping those invalid formats.
 
 **WARNING**
-- `pnpm exec tsc --noEmit` is a false green in this workspace because root `tsconfig.json` only declares project references and no source files; it does not catch the app errors that appear with `-p tsconfig.app.json`.
-- No runnable SEO runtime tests exist, so spec scenarios were only statically verified. This is an environment/tooling limitation, but it means there is still no passed runtime evidence for the change.
-- `generate-seo-assets.mjs` still hardcodes top-level person/contact metadata instead of deriving everything from canonical config/data, leaving drift risk in the crawlable JSON surface.
-- Static asset sizing is inconsistent with the design intent: both `public/favicon.png` and `public/apple-touch-icon.png` are `1024x1065`, while source metadata declares a `32x32` favicon and the design called for a dedicated touch icon size.
+- No runnable SEO runtime tests exist, so all scenario checks remain static-only. Per user instruction this is treated as an environment/tooling limitation, not a code failure by itself.
+- `pnpm run build` is currently blocked by the local Node 18 runtime. Vite 8 requires Node 20.19+ or 22.12+. Per user instruction this is treated as an environment limitation, not a code failure by itself.
+- `generate-seo-assets.mjs` still hardcodes top-level person/contact metadata, so the crawlable JSON surface is not yet fully single-source-of-truth.
+- `index.html` declares `sizes="1024x1065"` for `apple-touch-icon`, and both PNG assets are `1024x1065`, which drifts from the spec/design target asset sizes.
 
 **SUGGESTION**
-- Fix the four incomplete ternary expressions first; after that, rerun `pnpm exec tsc --noEmit -p tsconfig.app.json` and `pnpm run build` in Node 20.19+ or 22.12+.
-- Add a runnable frontend test path (Vitest + jsdom or equivalent) for JSON-LD, heading hierarchy, and initial crawlable DOM.
-- Drive `portfolio-content.json` top-level metadata from `siteConfig` so the static surface cannot drift from runtime SEO config.
+- After fixing the remaining structured-data/meta issues, rerun verification in Node 20.19+ or 22.12+ so build evidence can be collected.
+- Add a small frontend runtime test path (for example Vitest + jsdom) covering JSON-LD, heading hierarchy, and initial DOM crawlability.
+- Derive top-level `portfolio-content.json` metadata from `siteConfig` / source data to eliminate drift.
 
 ### Verdict
 FAIL
-The SEO change is materially improved and the previous single-`h1` issue is fixed in source, but final verification still fails because the app currently has real TypeScript/JSX parse errors that block compilation and build.
+The requested heading hierarchy, static asset presence, JSON-LD `WebSite.description`, `CreativeWork.author`, and ChatInterface DRY checks now pass, and the app typecheck is clean. However, the change still does NOT satisfy all approved SEO specs: social image alt tags are missing, `WebSite` lacks a Person reference, `CreativeWork` lacks `image`, and invalid `MM/YYYY` dates are not dropped.

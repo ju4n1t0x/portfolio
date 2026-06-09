@@ -33,8 +33,8 @@ export function normalizeExperienceDates(start: string): { startDate?: string } 
 export function normalizeEndDate(end: string): { endDate?: string } {
   if (end === "Presente") return {};
   if (isValidIsoDateFragment(end)) return { endDate: end };
-  const y = parseYear(end);
-  return y !== null ? { endDate: String(y) } : {};
+  // Drop MM/YYYY and other non-ISO fragments — do not coerce
+  return {};
 }
 
 // --- JSON-LD node builders ---
@@ -62,8 +62,16 @@ export function buildPersonSchema(cfg: {
   return node;
 }
 
-export function buildWebSiteSchema(cfg: { url: string; name: string; description: string }) {
-  return { "@context": SCHEMA_CONTEXT, "@type": "WebSite", name: cfg.name, url: cfg.url, description: cfg.description };
+export function buildWebSiteSchema(cfg: { url: string; name: string; description: string; authorId?: string }) {
+  const node: Record<string, unknown> = {
+    "@context": SCHEMA_CONTEXT,
+    "@type": "WebSite",
+    name: cfg.name,
+    url: cfg.url,
+    description: cfg.description,
+  };
+  if (cfg.authorId) node.publisher = { "@id": cfg.authorId };
+  return node;
 }
 
 export function buildCreativeWorkSchema(project: Project, baseUrl: string, authorId: string) {
@@ -76,6 +84,7 @@ export function buildCreativeWorkSchema(project: Project, baseUrl: string, autho
     author: { "@id": authorId },
   };
   if (url) node.url = toUrl(url, baseUrl);
+  if (project.images?.[0]) node.image = toUrl(String(project.images[0]), baseUrl);
   if (project.technologies.length) node.keywords = project.technologies.join(", ");
   return node;
 }
@@ -102,7 +111,7 @@ export function buildGraph(cfg: {
   const personId = person["@id"] as string;
   return [
     person,
-    buildWebSiteSchema({ url: cfg.siteConfig.url, name: cfg.siteConfig.name, description: cfg.siteConfig.description ?? "" }),
+    buildWebSiteSchema({ url: cfg.siteConfig.url, name: cfg.siteConfig.name, description: cfg.siteConfig.description ?? "", authorId: personId }),
     ...cfg.projects.map((p) => buildCreativeWorkSchema(p, cfg.siteConfig.url, personId)),
     buildItemListSchema(cfg.experiences, cfg.siteConfig.url),
   ];

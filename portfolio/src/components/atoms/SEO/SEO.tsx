@@ -64,6 +64,7 @@ export function SEO({
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={siteConfig.name} />
       <meta property="og:site_name" content={siteConfig.name} />
       <meta property="og:locale" content="es_AR" />
 
@@ -71,6 +72,7 @@ export function SEO({
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
+      <meta name="twitter:image:alt" content={siteConfig.name} />
 
       <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </Helmet>

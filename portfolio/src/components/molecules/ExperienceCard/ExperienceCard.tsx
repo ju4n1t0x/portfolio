@@ -7,7 +7,7 @@ interface ExperienceCardProps {
 
 export function ExperienceCard({ experience }: ExperienceCardProps) {
   return (
-    <div className="space-y-3">
+    <article className="space-y-3" aria-label={`Experiencia: ${experience.role} en ${experience.company}`}>
       {/* Title — company & role */}
       <div>
         <h3 className="text-lg font-semibold text-foreground">
@@ -56,6 +56,6 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
           </a>
         </div>
       )}
-    </div>
+    </article>
   )
 }

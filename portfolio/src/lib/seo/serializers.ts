@@ -1,6 +1,6 @@
 import type { Project } from "@/types";
 import type { Experience } from "@/types";
-import { SCHEMA_CONTEXT } from "./constants";
+import { SCHEMA_CONTEXT, SCHEMA_BASE } from "./constants";
 
 // --- URL helpers ---
 export function projectUrl(project: Pick<Project, "projectUrl" | "repoUrl">): string | undefined {
@@ -50,6 +50,7 @@ export function buildPersonSchema(cfg: {
   const node: Record<string, unknown> = {
     "@context": SCHEMA_CONTEXT,
     "@type": "Person",
+    "@id": `${SCHEMA_BASE}/Person`,
     name: cfg.name,
     jobTitle: cfg.jobTitle,
     url: cfg.url,
@@ -61,17 +62,18 @@ export function buildPersonSchema(cfg: {
   return node;
 }
 
-export function buildWebSiteSchema(cfg: { url: string; name: string }) {
-  return { "@context": SCHEMA_CONTEXT, "@type": "WebSite", name: cfg.name, url: cfg.url };
+export function buildWebSiteSchema(cfg: { url: string; name: string; description: string }) {
+  return { "@context": SCHEMA_CONTEXT, "@type": "WebSite", name: cfg.name, url: cfg.url, description: cfg.description };
 }
 
-export function buildCreativeWorkSchema(project: Project, baseUrl: string) {
+export function buildCreativeWorkSchema(project: Project, baseUrl: string, authorId: string) {
   const url = projectUrl(project);
   const node: Record<string, unknown> = {
     "@context": SCHEMA_CONTEXT,
     "@type": "CreativeWork",
     name: project.title,
     description: project.description,
+    author: { "@id": authorId },
   };
   if (url) node.url = toUrl(url, baseUrl);
   if (project.technologies.length) node.keywords = project.technologies.join(", ");
@@ -96,10 +98,12 @@ export function buildGraph(cfg: {
   projects: Project[];
   experiences: Experience[];
 }) {
+  const person = buildPersonSchema(cfg.siteConfig);
+  const personId = person["@id"] as string;
   return [
-    buildPersonSchema(cfg.siteConfig),
-    buildWebSiteSchema({ url: cfg.siteConfig.url, name: cfg.siteConfig.name }),
-    ...cfg.projects.map((p) => buildCreativeWorkSchema(p, cfg.siteConfig.url)),
+    person,
+    buildWebSiteSchema({ url: cfg.siteConfig.url, name: cfg.siteConfig.name, description: cfg.siteConfig.description ?? "" }),
+    ...cfg.projects.map((p) => buildCreativeWorkSchema(p, cfg.siteConfig.url, personId)),
     buildItemListSchema(cfg.experiences, cfg.siteConfig.url),
   ];
 }

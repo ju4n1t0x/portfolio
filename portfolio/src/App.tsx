@@ -22,7 +22,9 @@ function App() {
       <SEO />
       <div className="flex h-screen overflow-hidden bg-background">
         <Sidebar />
-        <ChatInterface />
+        <main role="main" className="flex-1 flex flex-col overflow-hidden">
+          <ChatInterface />
+        </main>
       </div>
     </HelmetProvider>
   );

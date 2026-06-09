@@ -130,7 +130,7 @@ export function ChatInterface() {
         appendToStreamingMessage(messageId, chunk)
       })
         .catch((error: Error) => {
-          console.error("Chat API error:", error)
+          console.error("Chat API error:", error) // eslint-disable-line no-console — intentional error logging for debugging
           markMessageAsError(messageId)
           // Show user-friendly error message
           const errorMsg = error.message.includes("Failed to fetch") || error.message.includes("net::")
@@ -291,6 +291,63 @@ export function ChatInterface() {
     })
   }
 
+  // Shared message list renderer — extracted to avoid 4x duplication
+  const renderMessageList = () => (
+    <>
+      {messages.map((message, index) => {
+        const previous = messages[index - 1]
+        const showDivider = Boolean(previous && previous.role !== message.role)
+
+        return (
+          <div key={message.id}>
+            {showDivider && (
+              <div className="w-full flex justify-center">
+                <div className="w-full max-w-[95%] md:max-w-[60%] px-6">
+                  <div className="h-px bg-border/60" />
+                </div>
+              </div>
+            )}
+            <ChatBubble
+              message={message}
+              onRetry={message.hasError ? handleRetry : undefined}
+            />
+          </div>
+        )
+      })}
+      {isTyping && (
+        <div className="w-full flex justify-center px-6 py-4">
+          <div className="w-full max-w-[95%] md:max-w-[60%] flex justify-start">
+            <div className="w-fit max-w-[85%] rounded-2xl border border-border/40 bg-secondary/60 shadow-sm">
+              <div className="flex flex-row gap-4 p-5">
+                <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
+                  <span className="text-xs font-semibold">JI</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="text-xs text-muted-foreground">Escribiendo...</span>
+                  <div className="flex gap-1 items-center">
+                    <span
+                      className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                      style={{ animationDelay: "0ms" }}
+                    />
+                    <span
+                      className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                      style={{ animationDelay: "150ms" }}
+                    />
+                    <span
+                      className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
+                      style={{ animationDelay: "300ms" }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      <div ref={messagesEndRef} />
+    </>
+  )
+
   return (
     <div className="flex flex-col h-screen w-full relative">
       {/* Top bar */}
@@ -315,7 +372,7 @@ export function ChatInterface() {
         </a>
       </header>
 
-      {/* Welcome hero — rendered ONCE outside all sections; only visible when no section is active */}
+      {/* Welcome hero — rendered ONCE outside all sections */}
       {!currentSection && (
         <WelcomeScreen
           onProjects={handleProjectsSuggestion}
@@ -325,246 +382,29 @@ export function ChatInterface() {
         />
       )}
 
-      {/* Chat area with semantic section landmarks — all present in DOM for crawlability */}
-      <section aria-label="Sobre Juan Ignacio" className={`flex-1 overflow-y-auto scrollbar-thin${currentSection && currentSection !== "about" ? " hidden" : ""}`}>
-        <h2 className={`text-2xl font-semibold px-6 pt-6${currentSection !== "about" ? " hidden" : ""}`}>Sobre Juan Ignacio</h2>
-        {hasMessages ? (
-          <div className="flex-1 overflow-y-auto scrollbar-thin">
-            {messages.map((message, index) => {
-              const previous = messages[index - 1]
-              const showDivider = Boolean(previous && previous.role !== message.role)
+      {/* Messages — rendered ONCE, scrollable area */}
+      {hasMessages && (
+        <div className="flex-1 overflow-y-auto scrollbar-thin">
+          {renderMessageList()}
+        </div>
+      )}
 
-              return (
-                <div key={message.id}>
-                  {showDivider && (
-                    <div className="w-full flex justify-center">
-                      <div className="w-full max-w-[95%] md:max-w-[60%] px-6">
-                        <div className="h-px bg-border/60" />
-                      </div>
-                    </div>
-                  )}
-                  <ChatBubble
-                    message={message}
-                    onRetry={message.hasError ? handleRetry : undefined}
-                  />
-                </div>
-              )
-            })}
-            {isTyping && (
-              <div className="w-full flex justify-center px-6 py-4">
-                <div className="w-full max-w-[95%] md:max-w-[60%] flex justify-start">
-                  <div className="w-fit max-w-[85%] rounded-2xl border border-border/40 bg-secondary/60 shadow-sm">
-                    <div className="flex flex-row gap-4 p-5">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                        <span className="text-xs font-semibold">JI</span>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Escribiendo...</span>
-                        <div className="flex gap-1 items-center">
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "0ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "150ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "300ms" }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
+      {/* SEO section landmarks — hidden headings for crawlers */}
+      <section aria-label="Sobre Juan Ignacio" className="hidden">
+        <h2>Sobre Juan Ignacio</h2>
+      </section>
+      <section aria-label="Proyectos" className="hidden">
+        <h2>Proyectos</h2>
+      </section>
+      <section aria-label="Experiencia" className="hidden">
+        <h2>Experiencia</h2>
+      </section>
+      <section aria-label="Contacto" className="hidden">
+        <h2>Contacto</h2>
       </section>
 
-      <section aria-label="Proyectos" className={`flex-1 overflow-y-auto scrollbar-thin${currentSection && currentSection !== "projects" ? " hidden" : ""}`}>
-        <h2 className="sr-only">Proyectos</h2>
-        {hasMessages ? (
-          <div className="flex-1 overflow-y-auto scrollbar-thin">
-            {messages.map((message, index) => {
-              const previous = messages[index - 1]
-              const showDivider = Boolean(previous && previous.role !== message.role)
-
-              return (
-                <div key={message.id}>
-                  {showDivider && (
-                    <div className="w-full flex justify-center">
-                      <div className="w-full max-w-[95%] md:max-w-[60%] px-6">
-                        <div className="h-px bg-border/60" />
-                      </div>
-                    </div>
-                  )}
-                  <ChatBubble 
-                    message={message} 
-                    onRetry={message.hasError ? handleRetry : undefined} 
-                  />
-                </div>
-              )
-            })}
-            {isTyping && (
-              <div className="w-full flex justify-center px-6 py-4">
-                <div className="w-full max-w-[95%] md:max-w-[60%] flex justify-start">
-                  <div className="w-fit max-w-[85%] rounded-2xl border border-border/40 bg-secondary/60 shadow-sm">
-                    <div className="flex flex-row gap-4 p-5">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                        <span className="text-xs font-semibold">JI</span>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Escribiendo...</span>
-                        <div className="flex gap-1 items-center">
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "0ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "150ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "300ms" }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-      </section>
-
-      <section aria-label="Experiencia" className={`flex-1 overflow-y-auto scrollbar-thin${currentSection && currentSection !== "experience" ? " hidden" : ""}`}>
-        <h2 className="sr-only">Experiencia</h2>
-        {hasMessages ? (
-          <div className="flex-1 overflow-y-auto scrollbar-thin">
-            {messages.map((message, index) => {
-              const previous = messages[index - 1]
-              const showDivider = Boolean(previous && previous.role !== message.role)
-
-              return (
-                <div key={message.id}>
-                  {showDivider && (
-                    <div className="w-full flex justify-center">
-                      <div className="w-full max-w-[95%] md:max-w-[60%] px-6">
-                        <div className="h-px bg-border/60" />
-                      </div>
-                    </div>
-                  )}
-                  <ChatBubble 
-                    message={message} 
-                    onRetry={message.hasError ? handleRetry : undefined} 
-                  />
-                </div>
-              )
-            })}
-            {isTyping && (
-              <div className="w-full flex justify-center px-6 py-4">
-                <div className="w-full max-w-[95%] md:max-w-[60%] flex justify-start">
-                  <div className="w-fit max-w-[85%] rounded-2xl border border-border/40 bg-secondary/60 shadow-sm">
-                    <div className="flex flex-row gap-4 p-5">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                        <span className="text-xs font-semibold">JI</span>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Escribiendo...</span>
-                        <div className="flex gap-1 items-center">
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "0ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "150ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "300ms" }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-      </section>
-
-      <section aria-label="Contacto" className={`flex-1 overflow-y-auto scrollbar-thin${currentSection && currentSection !== "contact" ? " hidden" : ""}`}>
-        <h2 className="sr-only">Contacto</h2>
-        {hasMessages ? (
-          <div className="flex-1 overflow-y-auto scrollbar-thin">
-            {messages.map((message, index) => {
-              const previous = messages[index - 1]
-              const showDivider = Boolean(previous && previous.role !== message.role)
-
-              return (
-                <div key={message.id}>
-                  {showDivider && (
-                    <div className="w-full flex justify-center">
-                      <div className="w-full max-w-[95%] md:max-w-[60%] px-6">
-                        <div className="h-px bg-border/60" />
-                      </div>
-                    </div>
-                  )}
-                  <ChatBubble 
-                    message={message} 
-                    onRetry={message.hasError ? handleRetry : undefined} 
-                  />
-                </div>
-              )
-            })}
-            {isTyping && (
-              <div className="w-full flex justify-center px-6 py-4">
-                <div className="w-full max-w-[95%] md:max-w-[60%] flex justify-start">
-                  <div className="w-fit max-w-[85%] rounded-2xl border border-border/40 bg-secondary/60 shadow-sm">
-                    <div className="flex flex-row gap-4 p-5">
-                      <div className="flex-shrink-0 w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center">
-                        <span className="text-xs font-semibold">JI</span>
-                      </div>
-                      <div className="flex flex-col gap-1">
-                        <span className="text-xs text-muted-foreground">Escribiendo...</span>
-                        <div className="flex gap-1 items-center">
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "0ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "150ms" }}
-                          />
-                          <span
-                            className="w-2 h-2 bg-muted-foreground/50 rounded-full animate-bounce"
-                            style={{ animationDelay: "300ms" }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
-        )}
-      </section>
-
-      {/* Input */}
-      <ChatInput 
-        onSend={handleSend} 
+      <ChatInput
+        onSend={handleSend}
         disabled={isTyping}
       />
     </div>

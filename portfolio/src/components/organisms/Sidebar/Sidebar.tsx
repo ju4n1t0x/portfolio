@@ -154,7 +154,7 @@ export function Sidebar() {
         </button>
       </div>
 
-      <nav className="flex-1 px-2 py-2 space-y-1 overflow-y-auto scrollbar-thin">
+      <nav aria-label="Secciones del portfolio" className="flex-1 px-2 py-2 space-y-1 overflow-y-auto scrollbar-thin">
         {sections.map((section) => (
           <button
             key={section.id}

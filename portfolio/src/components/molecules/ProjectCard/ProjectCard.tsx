@@ -11,7 +11,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [modalImage, setModalImage] = useState<string | URL | null>(null)
 
   return (
-    <div className="space-y-3">
+    <article className="space-y-3" aria-label={`Proyecto: ${project.title}`}>
       {/* Title */}
       <h3 className="text-lg font-semibold text-foreground">
         {project.title}
@@ -90,6 +90,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
         isOpen={!!modalImage}
         onClose={() => setModalImage(null)}
       />
-    </div>
+    </article>
   )
 }

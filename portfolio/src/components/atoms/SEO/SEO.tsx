@@ -1,5 +1,8 @@
 import { Helmet } from "react-helmet-async";
 import { siteConfig } from "@/config/site";
+import { projects } from "@/data/projects";
+import { experiences } from "@/data/experiences";
+import { buildGraph } from "@/lib/seo/serializers";
 
 interface SEOProps {
   title?: string;
@@ -24,16 +27,23 @@ export function SEO({
   noindex = false,
 }: SEOProps) {
   const canonical = `${siteConfig.url}${pathname}`;
-  const fullTitle =
-    title === siteConfig.title ? title : `${title} | ${siteConfig.name}`;
+  const fullTitle = title === siteConfig.title ? title : `${title} | ${siteConfig.name}`;
 
-  const personSchema = {
+  const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    name: siteConfig.name,
-    jobTitle: "Full Stack Developer",
-    url: siteConfig.url,
-    sameAs: [siteConfig.social.github, siteConfig.social.linkedin],
+    "@graph": buildGraph({
+      siteConfig: {
+        name: siteConfig.name,
+        jobTitle: siteConfig.jobTitle,
+        url: siteConfig.url,
+        image: `${siteConfig.url}${siteConfig.image}`,
+        description: siteConfig.description,
+        sameAs: [...siteConfig.sameAs],
+        knowsAbout: [...siteConfig.keywords],
+      },
+      projects,
+      experiences,
+    }),
   };
 
   return (
@@ -62,9 +72,7 @@ export function SEO({
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
 
-      <script type="application/ld+json">
-        {JSON.stringify(personSchema)}
-      </script>
+      <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
     </Helmet>
   );
 }

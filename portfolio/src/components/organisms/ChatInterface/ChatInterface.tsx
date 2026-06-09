@@ -559,13 +559,6 @@ export function ChatInterface() {
             )}
             <div ref={messagesEndRef} />
           </div>
-        ) : (
-          <WelcomeScreen
-            onProjects={handleProjectsSuggestion}
-            onExperience={handleExperienceSuggestion}
-            onContact={handleContactSuggestion}
-            avatarSrc={heroAvatar}
-          />
         )}
       </section>
 

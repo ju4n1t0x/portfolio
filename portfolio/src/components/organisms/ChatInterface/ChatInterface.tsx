@@ -20,7 +20,7 @@ import {
 } from "@/data/contact"
 import { sendProjectMessages, sendExperienceMessages } from "@/lib/chatHelpers"
 import { simulateTypingDelay } from "@/lib/utils"
-import heroAvatar from "@/assets/avatar-4.png"
+import heroAvatar from "@/assets/avatar-mundial.png"
 
 interface WelcomeScreenProps {
   onProjects: () => void
@@ -48,35 +48,36 @@ function WelcomeScreen({
   return (
     <div className="flex-1 flex items-center justify-center p-8">
       <div className="text-center max-w-lg space-y-4">
-        <div className="w-16 h-16 sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden mx-auto shadow-sm">
+        <div className="w-16 h-16 sm:w-[150px] sm:h-[150px] rounded-full overflow-hidden mx-auto shadow-[0_0_28px_oklch(var(--primary)/0.45)] animate-message-in" style={{ "--stagger-index": 0 } as React.CSSProperties}>
           <img
             src={resolvedAvatarSrc}
             alt={resolvedAvatarAlt}
             className="w-full h-full object-cover"
           />
         </div>
-        <h1 className="text-3xl font-semibold text-foreground tracking-tight">
+        <h1 className="text-3xl font-semibold text-foreground tracking-tight animate-message-in" style={{ "--stagger-index": 1 } as React.CSSProperties}>
           Hola, soy Juan Ignacio.
         </h1>
-        <h2 className="text-lg text-muted-foreground leading-relaxed">
+        <h2 className="text-lg text-muted-foreground leading-relaxed animate-message-in" style={{ "--stagger-index": 2 } as React.CSSProperties}>
           Desarrollador Backend.
         </h2>
-        <p className="text-md text-muted-foreground leading-relaxed">
+        <p className="text-md text-muted-foreground leading-relaxed animate-message-in" style={{ "--stagger-index": 3 } as React.CSSProperties}>
           Formándome en Data Engineering y Ciencia de Datos.
         </p>
         <a 
           href="mailto:contacto@juansasia.com"
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-accent transition-colors animate-message-in"
+          style={{ "--stagger-index": 4 } as React.CSSProperties}
         >
           <Mail className="w-4 h-4" />
           contacto@juansasia.com
         </a>
-        <div className="flex flex-wrap justify-center gap-2 pt-4">
+        <div className="flex flex-wrap justify-center gap-2 pt-4 animate-message-in" style={{ "--stagger-index": 5 } as React.CSSProperties}>
           {suggestions.map((suggestion) => (
               <button
                 key={suggestion.label}
                 onClick={suggestion.onClick}
-                className="neon-suggestion px-4 py-2 rounded-xl border border-border text-sm text-foreground/80 hover:bg-secondary/80 transition-colors"
+                className="rounded-full border border-border/60 bg-card/50 px-4 py-2 text-sm text-muted-foreground transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-primary/20 hover:text-foreground active:translate-y-px"
               >
                 {suggestion.label}
               </button>
@@ -299,7 +300,7 @@ export function ChatInterface() {
         const showDivider = Boolean(previous && previous.role !== message.role)
 
         return (
-          <div key={message.id}>
+          <div key={message.id} className="animate-message-in" style={{ "--stagger-index": index } as React.CSSProperties}>
             {showDivider && (
               <div className="w-full flex justify-center">
                 <div className="w-full max-w-[95%] md:max-w-[60%] px-6">

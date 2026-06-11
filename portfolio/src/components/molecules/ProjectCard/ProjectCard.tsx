@@ -11,24 +11,25 @@ export function ProjectCard({ project }: ProjectCardProps) {
   const [modalImage, setModalImage] = useState<string | URL | null>(null)
 
   return (
-    <article className="space-y-3" aria-label={`Proyecto: ${project.title}`}>
+    <article className="space-y-3 p-4 rounded-2xl bg-card border border-border/40 shadow-[0_1px_2px_rgba(0,0,0,0.3),0_8px_24px_-12px_rgba(0,0,0,0.5)] hover:-translate-y-0.5 hover:shadow-[0_2px_4px_rgba(0,0,0,0.4),0_12px_32px_-8px_rgba(0,0,0,0.6)] transition-all duration-200" aria-label={`Proyecto: ${project.title}`}>
       {/* Title */}
       <h3 className="text-lg font-semibold text-foreground">
         {project.title}
       </h3>
 
       {/* Description */}
-      <p className="text-foreground/90 leading-relaxed text-sm">
+      <p className="text-muted-foreground leading-relaxed text-sm">
         {project.description}
       </p>
 
       {/* Technology tags */}
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {project.technologies.map((tech) => (
           <span
             key={tech}
-            className="px-2.5 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/60 px-3 py-1 font-mono text-xs text-muted-foreground"
           >
+            <span className="size-1.5 rounded-full bg-primary opacity-70 shrink-0" />
             {tech}
           </span>
         ))}
@@ -38,11 +39,11 @@ export function ProjectCard({ project }: ProjectCardProps) {
       {project.images.length > 0 && (
         <div className="flex gap-2 overflow-x-auto pt-1 pb-1 scrollbar-thin">
           {project.images.map((img, index) => (
-            <div key={index} className="relative group flex-shrink-0">
+            <div key={index} className="relative group flex-shrink-0 animate-message-in" style={{ "--stagger-index": index } as React.CSSProperties}>
               <img
                 src={typeof img === "string" ? img : img.toString()}
                 alt={`${project.title} preview ${index + 1}`}
-                className="rounded-lg border border-border/40 object-cover h-36 w-auto cursor-pointer hover:ring-2 hover:ring-primary/50 transition-all"
+                className="rounded-xl border border-border object-cover h-36 w-auto cursor-pointer transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 onClick={() => setModalImage(img)}
               />
@@ -63,7 +64,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               href={project.repoUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-accent transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
               Repositorio
@@ -74,7 +75,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
               href={project.projectUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-accent transition-colors"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               Ver proyecto

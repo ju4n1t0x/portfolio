@@ -4,66 +4,73 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 9%;
-    --radius: 0.75rem;
+    --background: 1 0 0;
+    --foreground: 0.145 0 0;
+    --card: 1 0 0;
+    --card-foreground: 0.145 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.145 0 0;
+    --primary: 0.55 0.13 165;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.97 0 0;
+    --secondary-foreground: 0.145 0 0;
+    --muted: 0.97 0 0;
+    --muted-foreground: 0.556 0 0;
+    --accent: 0.55 0.13 165;
+    --accent-foreground: 1 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.922 0 0;
+    --input: 0.922 0 0;
+    --ring: 0.55 0.13 165 / 60%;
+    --radius: 0.625rem;
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
 
-    --sidebar: 0 0% 97%;
-    --sidebar-foreground: 0 0% 30%;
-    --sidebar-border: 0 0% 91%;
-    --sidebar-hover: 0 0% 93%;
-    --sidebar-active: 0 0% 90%;
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-border: 0.922 0 0;
+    --sidebar-hover: 0.97 0 0;
+    --sidebar-active: 0.95 0 0;
 
-    --chat-user: 0 0% 96%;
-    --chat-assistant: 0 0% 100%;
+    --chat-user: 0.96 0.005 165;
+    --chat-assistant: 1 0 0;
   }
 
   .dark {
-    --background: 220 13% 10%;
-    --foreground: 0 0% 93%;
-    --card: 220 13% 10%;
-    --card-foreground: 0 0% 93%;
-    --popover: 220 13% 10%;
-    --popover-foreground: 0 0% 93%;
-    --primary: 0 0% 93%;
-    --primary-foreground: 220 13% 10%;
-    --secondary: 220 10% 16%;
-    --secondary-foreground: 0 0% 93%;
-    --muted: 220 10% 16%;
-    --muted-foreground: 0 0% 55%;
-    --accent: 220 10% 16%;
-    --accent-foreground: 0 0% 93%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 220 10% 18%;
-    --input: 220 10% 18%;
-    --ring: 0 0% 93%;
+    --background: 0.16 0.004 285;
+    --foreground: 0.96 0.002 285;
+    --card: 0.205 0.004 285;
+    --card-foreground: 0.96 0.002 285;
+    --popover: 0.205 0.004 285;
+    --popover-foreground: 0.96 0.002 285;
+    --primary: 0.7 0.13 165;
+    --primary-foreground: 0.16 0.02 165;
+    --secondary: 0.26 0.004 285;
+    --secondary-foreground: 0.96 0.002 285;
+    --muted: 0.26 0.004 285;
+    --muted-foreground: 0.68 0.004 285;
+    --accent: 0.7 0.13 165;
+    --accent-foreground: 0.16 0.02 165;
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.96 0.002 285;
+    --border: 1 0 0 / 8%;
+    --input: 1 0 0 / 12%;
+    --ring: 0.7 0.13 165 / 60%;
 
-    --sidebar: 220 13% 8%;
-    --sidebar-foreground: 0 0% 65%;
-    --sidebar-border: 220 10% 14%;
-    --sidebar-hover: 220 10% 14%;
-    --sidebar-active: 220 10% 18%;
+    --sidebar: 0.185 0.004 285;
+    --sidebar-foreground: 0.96 0.002 285;
+    --sidebar-border: 1 0 0 / 8%;
+    --sidebar-hover: 0.22 0.004 285;
+    --sidebar-active: 0.26 0.004 285;
 
-    --chat-user: 220 13% 10%;
-    --chat-assistant: 220 13% 10%;
+    --chat-user: 0.205 0.004 285;
+    --chat-assistant: 0.205 0.004 285;
   }
 }
 
@@ -80,7 +87,7 @@
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
-    scrollbar-color: hsl(var(--border)) transparent;
+    scrollbar-color: oklch(var(--border)) transparent;
   }
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
@@ -89,47 +96,24 @@
     background: transparent;
   }
   .scrollbar-thin::-webkit-scrollbar-thumb {
-    background-color: hsl(var(--border));
+    background-color: oklch(var(--border));
     border-radius: 3px;
   }
 
-  .neon-suggestion {
-    position: relative;
-    z-index: 0;
+  .animate-message-in {
+    animation-delay: calc(var(--stagger-index, 0) * 60ms);
   }
 
-  .neon-suggestion::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1px;
-    background: conic-gradient(
-      from 0deg,
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.28),
-      rgba(255, 255, 255, 0.08),
-      rgba(255, 255, 255, 0.28),
-      rgba(255, 255, 255, 0.08)
-    );
-    opacity: 0.7;
-    filter: blur(0.15px);
-    -webkit-mask: linear-gradient(#000 0 0) content-box,
-      linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .animate-message-in {
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
-
-  .neon-suggestion::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.18);
-    opacity: 0.8;
-    pointer-events: none;
-  }
-
 }

@@ -125,7 +125,7 @@ export function Sidebar() {
       <aside
         className={cn(
           "flex-shrink-0 h-screen flex flex-col overflow-hidden",
-          "bg-[hsl(var(--sidebar))] border-r border-[hsl(var(--sidebar-border))]",
+          "bg-[oklch(var(--sidebar))] border-r border-[oklch(var(--sidebar-border))]",
           isDesktop
             ? cn(
                 "relative transition-all duration-300 ease-in-out",
@@ -141,13 +141,13 @@ export function Sidebar() {
       <div className="flex items-center justify-between p-3 h-14">
         <button
           onClick={toggleSidebar}
-          className="p-2 rounded-lg hover:bg-[hsl(var(--sidebar-hover))] text-[hsl(var(--sidebar-foreground))] transition-colors"
+          className="p-2 rounded-lg hover:bg-[oklch(var(--sidebar-hover))] text-[oklch(var(--sidebar-foreground))] transition-colors"
           aria-label="Cerrar sidebar"
         >
           <PanelLeftClose className="w-5 h-5" />
         </button>
         <button
-          className="p-2 rounded-lg hover:bg-[hsl(var(--sidebar-hover))] text-[hsl(var(--sidebar-foreground))] transition-colors"
+          className="p-2 rounded-lg hover:bg-[oklch(var(--sidebar-hover))] text-[oklch(var(--sidebar-foreground))] transition-colors"
           aria-label="Nueva conversacion"
         >
           <Plus className="w-5 h-5" />
@@ -160,8 +160,8 @@ export function Sidebar() {
             key={section.id}
             onClick={() => handleSectionClick(section.id)}
             className={cn(
-              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-left transition-colors",
-              "text-[hsl(var(--sidebar-foreground))] hover:bg-[hsl(var(--sidebar-hover))]"
+              "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-left transition-all hover:translate-x-0.5",
+              "text-[oklch(var(--sidebar-foreground))] hover:bg-[oklch(var(--sidebar-hover))]"
             )}
           >
             {section.icon}
@@ -170,13 +170,13 @@ export function Sidebar() {
         ))}
       </nav>
 
-      <div className="p-2 border-t border-[hsl(var(--sidebar-border))] space-y-1">
+      <div className="p-2 border-t border-[oklch(var(--sidebar-border))] space-y-1">
         <div className="flex items-center gap-1 px-1">
           <a
             href="https://github.com/ju4n1t0x/ju4n1t0x"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg hover:bg-[hsl(var(--sidebar-hover))] text-[hsl(var(--sidebar-foreground))] transition-colors"
+            className="p-2 rounded-lg hover:bg-[oklch(var(--sidebar-hover))] text-[oklch(var(--sidebar-foreground))] transition-colors active:scale-95"
             aria-label="GitHub"
           >
             <Github className="w-4 h-4" />
@@ -185,7 +185,7 @@ export function Sidebar() {
             href="https://www.linkedin.com/in/juan-ignacio-sasia/"
             target="_blank"
             rel="noopener noreferrer"
-            className="p-2 rounded-lg hover:bg-[hsl(var(--sidebar-hover))] text-[hsl(var(--sidebar-foreground))] transition-colors"
+            className="p-2 rounded-lg hover:bg-[oklch(var(--sidebar-hover))] text-[oklch(var(--sidebar-foreground))] transition-colors active:scale-95"
             aria-label="LinkedIn"
           >
             <Linkedin className="w-4 h-4" />
@@ -193,7 +193,7 @@ export function Sidebar() {
           <div className="flex-1" />
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-lg hover:bg-[hsl(var(--sidebar-hover))] text-[hsl(var(--sidebar-foreground))] transition-colors"
+            className="p-2 rounded-lg hover:bg-[oklch(var(--sidebar-hover))] text-[oklch(var(--sidebar-foreground))] transition-colors"
             aria-label={theme === "dark" ? "Modo claro" : "Modo oscuro"}
           >
             {theme === "dark" ? (

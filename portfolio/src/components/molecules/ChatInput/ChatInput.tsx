@@ -47,7 +47,7 @@ export function ChatInput({ onSend, disabled, disabledMessage }: ChatInputProps)
     <div className="max-w-[95%] md:max-w-[60%] mx-auto w-full px-4 pb-4">
       <form
         onSubmit={handleSubmit}
-        className="relative flex items-end gap-2 rounded-2xl border border-border bg-secondary/50 px-4 py-3 shadow-sm focus-within:border-foreground/20 transition-colors"
+        className="relative flex items-end gap-2 rounded-2xl border border-border bg-secondary/50 backdrop-blur-md px-4 py-3 shadow-sm focus-within:border-primary/40 transition-colors"
       >
         <textarea
           ref={textareaRef}
@@ -66,7 +66,7 @@ export function ChatInput({ onSend, disabled, disabledMessage }: ChatInputProps)
           className={cn(
             "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-colors",
             message.trim()
-              ? "bg-foreground text-background hover:bg-foreground/90"
+              ? "bg-primary text-white hover:bg-primary/90"
               : "bg-muted text-muted-foreground cursor-not-allowed"
           )}
         >

@@ -14,7 +14,7 @@ export function ChatBubble({ message, onRetry }: ChatBubbleProps) {
   const hasRichContent = message.richContent !== undefined
 
   return (
-    <div className="w-full flex justify-center px-6 py-4">
+    <div className="w-full flex justify-center px-6 py-4 animate-message-in" style={{ "--stagger-index": 0 } as React.CSSProperties}>
       <div
         className={cn(
           "w-full max-w-[95%] md:max-w-[60%] flex",
@@ -23,7 +23,7 @@ export function ChatBubble({ message, onRetry }: ChatBubbleProps) {
       >
         <div
           className={cn(
-            "w-fit max-w-[85%] rounded-2xl border border-border/40 shadow-sm",
+            "w-fit max-w-[85%] rounded-2xl border border-border/40 shadow-sm backdrop-blur-sm bg-card/80",
             isUser
               ? "bg-primary/10 text-foreground"
               : "bg-secondary/60 text-foreground"

@@ -7,7 +7,7 @@ interface ExperienceCardProps {
 
 export function ExperienceCard({ experience }: ExperienceCardProps) {
   return (
-    <article className="space-y-3" aria-label={`Experiencia: ${experience.role} en ${experience.company}`}>
+    <article className="space-y-3 p-4 rounded-2xl bg-card border border-border/40 shadow-[0_1px_2px_rgba(0,0,0,0.3),0_8px_24px_-12px_rgba(0,0,0,0.5)] hover:-translate-y-0.5 hover:shadow-[0_2px_4px_rgba(0,0,0,0.4),0_12px_32px_-8px_rgba(0,0,0,0.6)] transition-all duration-200" aria-label={`Experiencia: ${experience.role} en ${experience.company}`}>
       {/* Title — company & role */}
       <div>
         <h3 className="text-lg font-semibold text-foreground">
@@ -26,17 +26,18 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-foreground/90 leading-relaxed text-sm">
+      <p className="text-muted-foreground leading-relaxed text-sm">
         {experience.description}
       </p>
 
       {/* Technology tags */}
-      <div className="flex flex-wrap gap-1.5">
+      <div className="flex flex-wrap gap-2">
         {experience.technologies.map((tech) => (
           <span
             key={tech}
-            className="px-2.5 py-1 text-xs font-medium rounded-full bg-primary/10 text-primary border border-primary/20"
+            className="flex items-center gap-1.5 rounded-full border border-border bg-secondary/60 px-3 py-1 font-mono text-xs text-muted-foreground"
           >
+            <span className="size-1.5 rounded-full bg-primary opacity-70 shrink-0" />
             {tech}
           </span>
         ))}
@@ -49,7 +50,7 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
             href={experience.companyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-accent transition-colors"
           >
             <ExternalLink className="w-3.5 h-3.5" />
             Sitio web de la empresa

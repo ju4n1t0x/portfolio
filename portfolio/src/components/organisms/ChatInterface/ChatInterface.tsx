@@ -20,7 +20,7 @@ import {
 } from "@/data/contact"
 import { sendProjectMessages, sendExperienceMessages } from "@/lib/chatHelpers"
 import { simulateTypingDelay } from "@/lib/utils"
-import heroAvatar from "@/assets/avatar-mundial.png"
+import heroAvatar from "@/assets/avatar-mundial.webp"
 
 interface WelcomeScreenProps {
   onProjects: () => void

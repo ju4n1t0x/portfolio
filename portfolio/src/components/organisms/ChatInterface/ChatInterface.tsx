@@ -374,7 +374,7 @@ export function ChatInterface() {
       </header>
 
       {/* Welcome hero — rendered ONCE outside all sections */}
-      {!currentSection && (
+      {!currentSection && !hasMessages && (
         <WelcomeScreen
           onProjects={handleProjectsSuggestion}
           onExperience={handleExperienceSuggestion}

@@ -5,18 +5,18 @@ Portfolio profesional con asistente AI integrado para recruiters.
 ## Stack
 
 - **Frontend**: React 19, TypeScript, Zustand, TailwindCSS
-- **Backend**: FastAPI, Python 3.12, Ollama
-- **AI**: Asistente basado en contexto
+- **Backend**: FastAPI, Python 3.12
+- **AI**: Asistente basado en contexto (OpenRouter)
 
 ## Quick Start
 
 ```bash
-# Levantar todo con Docker
+# Levantar todo con Docker (dev local)
 docker compose up --build
 
-# O local (requiere Ollama corriendo)
-cd backend && uvicorn app.main:app --reload
-cd portfolio && npm run dev
+# O local
+cd apps/backend && uvicorn app.main:app --reload
+cd apps/frontend && pnpm dev
 ```
 
 ## Servicios
@@ -24,40 +24,44 @@ cd portfolio && npm run dev
 | Servicio | Puerto | Descripción |
 |----------|--------|-------------|
 | Frontend | 5173 | Interfaz de chat estilo ChatGPT |
-| Backend API | 8000 | Endpoints FastAPI |
-| Ollama | 11434 | LLM local (qwen2.5) |
+| Backend API | 8000 | Endpoints FastAPI (todo bajo `/api`) |
 
 ## API Endpoints
 
 | Método | Ruta | Descripción |
 |--------|------|-------------|
-| POST | `/chat` | Chat con el asistente AI |
+| POST | `/api/agentJuani` | Chat con el asistente AI (rate-limit 5/min) |
+| POST | `/api/sendEmail` | Formulario de contacto |
+| POST | `/api/auth/token` | Emite cookies de sesión HttpOnly |
+| POST | `/api/auth/refresh` | Rota el refresh token |
+| POST | `/api/auth/logout` | Cierra sesión |
 
 ## Estructura
 
 ```
 portfolio/
-├── portfolio/          # Frontend React
-├── backend/
-│   ├── app/
-│   │   ├── main.py           # FastAPI app
-│   │   ├── client/           # Ollama
-│   │   ├── context/          # Curriculum context
-│   │   └── scripts/          # Scripts de build
-│   └── requirements.txt
-└── docker-compose.yml
+├── apps/
+│   ├── frontend/         # React (deploy Dokploy: portfolio-frontend)
+│   └── backend/          # FastAPI (deploy Dokploy: portfolio-backend)
+├── nginx/proxy.conf      # Solo dev local (en prod: Traefik)
+├── data/                 # Volumen backend (sqlite refresh.db)
+├── docker-compose.yml    # Solo dev local
+└── docs/deployment.md    # Guía de deploy en Dokploy
 ```
 
-## Features
+## Deploy
 
-- Chat AI con contexto de CV (RAG)
-- Modelo local via Ollama (no requiere API keys)
+Prod = dos apps Dokploy bajo el mismo dominio (Traefik rutea `/api/*`
+al backend y `/` al frontend). Ver `docs/deployment.md`.
 
 ## Development
 
 ```bash
-# Run tests (si existen)
-pytest
+# Backend tests
+cd apps/backend && python -m pytest tests/ -q
+
+# Frontend checks
+cd apps/frontend && pnpm exec tsc -b && pnpm exec eslint src
 ```
 
 ## License

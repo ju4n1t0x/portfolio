@@ -4,10 +4,12 @@
 
 ### Prerequisites
 
-- [ ] Backend running: `cd backend && uvicorn app.main:app --reload`
-- [ ] Frontend running: `cd portfolio && pnpm dev`
-- [ ] Ollama running with `qwen2.5:0.5b` model
+- [ ] Backend running: `cd apps/backend && uvicorn app.main:app --reload`
+- [ ] Frontend running: `cd apps/frontend && pnpm dev`
 - [ ] Browser DevTools Network tab open to verify API calls
+- [ ] Auth = HttpOnly cookies: open the app once so `POST /api/auth/token`
+  sets cookies; API calls need `credentials: include` (browser) or a
+  cookie jar (curl `-c/-b`)
 
 ---
 
@@ -132,9 +134,10 @@
 
 **Purpose**: Verify API works without section parameter
 
-1. [ ] Using curl or Postman, send request:
+1. [ ] Using curl or Postman, send request (session cookie required):
    ```bash
-   curl -X POST http://localhost:8000/chat \
+   curl -c jar.txt -X POST http://localhost:8000/api/auth/token
+   curl -b jar.txt -X POST http://localhost:8000/api/agentJuani \
      -H "Content-Type: application/json" \
      -d '{"message": "Hello"}'
    ```
@@ -149,9 +152,9 @@
 
 **Purpose**: Verify API gracefully handles invalid sections
 
-1. [ ] Using curl or Postman, send request:
+1. [ ] Using curl or Postman, send request (session cookie required):
    ```bash
-   curl -X POST http://localhost:8000/chat \
+   curl -b jar.txt -X POST http://localhost:8000/api/agentJuani \
      -H "Content-Type: application/json" \
      -d '{"message": "Hello", "section": "invalid"}'
    ```

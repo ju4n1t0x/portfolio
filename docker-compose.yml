@@ -1,3 +1,4 @@
+# Local dev only. Prod = two Dokploy apps (see docs/deployment.md).
 services:
   proxy:
     image: nginx:1.30.1-alpine
@@ -14,11 +15,21 @@ services:
 
   portfolio_backend:
     build:
-      context: ./backend
+      context: ./apps/backend
       dockerfile: Dockerfile
+    env_file:
+      - path: .env
+        required: false
     environment:
       - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-openrouter/free}
       - RESEND_API_KEY=${RESEND_API_KEY:-}
+      - FROM_EMAIL=${FROM_EMAIL:-}
+      - CONTACT_EMAIL=${CONTACT_EMAIL:-contacto@juansasia.com}
+      - SECRET_KEY=${SECRET_KEY:-}
+      - CLIENT_ID=${CLIENT_ID:-portfolio-client}
+      - CLIENT_SECRET=${CLIENT_SECRET:-}
+      - ENV=production
     volumes:
       - ./data:/app/data
     command: /app/entrypoint.sh
@@ -48,8 +59,10 @@ services:
 
   portfolio_frontend:
     build:
-      context: ./portfolio
+      context: ./apps/frontend
       dockerfile: Dockerfile
+      args:
+        - VITE_API_URL=/api
     depends_on:
       portfolio_backend:
         condition: service_healthy

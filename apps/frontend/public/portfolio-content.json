@@ -1,0 +1,95 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Juan Ignacio Sasia",
+  "jobTitle": "Full Stack Developer",
+  "url": "https://juansasia.com",
+  "email": "contacto@juansasia.com",
+  "description": "Técnico universitario en TI, estudiante de Lic. en Ciencia de Datos. Desarrollador full stack especializado en soluciones web modernas.",
+  "keywords": [
+    "Full Stack Developer",
+    "React",
+    "TypeScript",
+    "FastAPI",
+    "Python",
+    "Laravel",
+    "Portfolio",
+    "Desarrollador Web",
+    "Argentina"
+  ],
+  "sameAs": [
+    "https://github.com/ju4n1t0x",
+    "https://www.linkedin.com/in/juan-ignacio-sasia/"
+  ],
+  "about": {
+    "@type": "AboutPage",
+    "name": "Juan Ignacio Sasia",
+    "jobTitle": "Full Stack Developer",
+    "summary": "Soy Juan Ignacio, técnico universitario en Tecnologías de la Información (UTN) y estudiante de la Licenciatura en Ciencia de Datos (UGR). Me desempeño como Backend Developer con orientación a Java/Spring Boot como stack principal y FastAPI/Python para proyectos de datos e IA. Tengo experiencia en desarrollo de APIs REST, microservicios, arquitectura por capas y principios SOLID, CI/CD, ciencia de datos e IA aplicada incluyendo RAG y OpenAI SDK. Estoy disponible para trabajar de forma remota, presencial o híbrida.",
+    "knowsAbout": [
+      "Full Stack Development",
+      "React",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "Laravel",
+      "Backend Development"
+    ]
+  },
+  "projects": [
+    {
+      "name": "Portfolio Personal",
+      "description": "Portfolio profesional con interfaz conversacional estilo ChatGPT. El frontend en React 19 se comunica con un backend en FastAPI que implementa RAG (Retrieval-Augmented Generation) para responder consultas contextualizadas sobre mi perfil. Autenticación JWT, containerización con Docker y deploy automatizado en Dokploy.",
+      "url": "https://juansasia.com",
+      "keywords": "React 19, TypeScript, Zustand, Tailwind CSS, FastAPI, Python, RAG, JWT, Docker, Dokploy",
+      "sameAs": "https://github.com/ju4n1t0x/portfolio"
+    },
+    {
+      "name": "SteelMat - Sitio Corporativo",
+      "description": "Desarrollo de sitio web corporativo para empresa de construcción en seco. Diseño moderno y responsive con sistema de contacto mediante emails transaccionales. Incluye migración de hosting y optimización SEO para posicionamiento local.",
+      "url": "https://steelmat.com.ar",
+      "keywords": "Astro, TypeScript, Resend, Tailwind CSS",
+      "sameAs": "https://github.com/ju4n1t0x/steelmat"
+    },
+    {
+      "name": "AislaMat - Sistema de Gestión",
+      "description": "Plataforma de gestión para empresa de aislamiento térmico en construcción. Incluye landing page, simulador de presupuestos, panel de administración en Filament y dashboard de leads. Desarrollo activo en branch dev con pipeline de testing en Pest.",
+      "url": "https://github.com/ju4n1t0x/aislamat",
+      "keywords": "Laravel 13, Filament v5, Livewire v4, Fortify, Pest v4",
+      "sameAs": "https://github.com/ju4n1t0x/aislamat"
+    },
+    {
+      "name": "Eficiencia Energética - Análisis de Datos",
+      "description": "Proyecto de ciencia de datos para análisis de eficiencia energética usando metodología CRISP-DM. Procesamiento de dataset CAMMESA de demanda eléctrica argentina, modelado predictivo con Gradient Boosting (R²=0.929) y deployment en Docker.",
+      "url": "https://github.com/ju4n1t0x/eficiencia_energetica",
+      "keywords": "FastAPI, React, TypeScript, PostgreSQL, scikit-learn, Pandas, NumPy, Docker",
+      "sameAs": "https://github.com/ju4n1t0x/eficiencia_energetica"
+    }
+  ],
+  "experience": [
+    {
+      "roleName": "Backend Developer",
+      "worksFor": "Xinergia",
+      "startDate": "2025",
+      "description": "Desarrollo y mantenimiento de APIs REST y servicios backend para plataforma e-learning. Integración con servicios externos: CRMs, ERPs y pasarelas de pago. Modelado y optimización de bases de datos relacionales (PostgreSQL, MySQL). Implementación de pipelines CI/CD y enfoque API-first. Arquitectura por capas con separación Controllers/Services y principios SOLID."
+    },
+    {
+      "roleName": "Web Developer",
+      "worksFor": "SteelMat",
+      "startDate": "2025",
+      "endDate": "2025",
+      "description": "Desarrollo integral de sitio web corporativo para empresa de construcción en seco. Implementación de emails transaccionales con Resend, migración de hosting, configuración de dominio y DNS en Vercel, y optimización SEO para posicionamiento local."
+    },
+    {
+      "roleName": "Tutor Académico",
+      "worksFor": "UTN - Facultad Regional Santa Fe",
+      "startDate": "2025",
+      "description": "Tutor en la Tecnicatura Universitaria en Tecnologías de la Información. Acompañamiento académico a estudiantes en las asignaturas Diseño de Sistemas de Información y Desarrollo de Sitios Web. Apoyo en resolución de trabajos prácticos, refuerzo de conceptos teóricos y mentoría en buenas prácticas de desarrollo."
+    }
+  ],
+  "contact": {
+    "email": "contacto@juansasia.com",
+    "github": "https://github.com/ju4n1t0x",
+    "linkedin": "https://www.linkedin.com/in/juan-ignacio-sasia/"
+  }
+}

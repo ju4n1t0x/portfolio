@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+ollama
+numpy
+pydantic
+httpx
+python-jose[cryptography]
+python-dotenv
+openai>=1.0.0
+resend
+slowapi
+
+# Testing
+pytest

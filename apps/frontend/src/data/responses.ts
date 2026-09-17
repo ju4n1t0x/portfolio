@@ -1,0 +1,2 @@
+export const aboutResponse =
+  "Soy Juan Ignacio, técnico universitario en Tecnologías de la Información (UTN) y estudiante de la Licenciatura en Ciencia de Datos (UGR). Me desempeño como Backend Developer con orientación a Java/Spring Boot como stack principal y FastAPI/Python para proyectos de datos e IA. Tengo experiencia en desarrollo de APIs REST, microservicios, arquitectura por capas y principios SOLID, CI/CD, ciencia de datos e IA aplicada incluyendo RAG y OpenAI SDK. Estoy disponible para trabajar de forma remota, presencial o híbrida."

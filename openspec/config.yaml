@@ -1,0 +1,80 @@
+strict_tdd: true
+context: |
+  portfolio is a monorepo with frontend (React 19 + Vite + TypeScript) and backend (Python 3.12 + FastAPI + Ollama RAG).
+  Backend stack: FastAPI, Uvicorn, Pydantic, Ollama (qwen2.5:0.5b), numpy (cosine similarity), python-jose (JWT), httpx, openai, resend.
+  Architecture: Controller-Service-Model with dependency injection, CORS middleware, JWT auth middleware.
+  Backend test runner: pytest with FastAPI TestClient.
+  Frontend package manager: pnpm.
+  Primary backend test command: pytest (run from backend/).
+  Unit tests: pytest (fastapi.testclient.TestClient).
+  Integration tests: none configured.
+  E2E tests: none configured.
+  Coverage tool: not configured (pytest-cov not in requirements.txt).
+  Linter: not configured for backend (frontend uses pnpm lint).
+  Type checker: not configured for backend (frontend uses TypeScript strict).
+  Formatter: not configured.
+rules:
+  proposal:
+    require_problem_statement: true
+  spec:
+    require_acceptance_criteria: true
+  design:
+    require_tradeoffs: true
+  tasks:
+    protect_review_workload: true
+  apply:
+    test_command: "cd backend && pytest"
+  verify:
+    test_command: "cd backend && pytest"
+testing:
+  detected: "2026-06-11"
+  backends:
+    backend:
+      runner:
+        command: "pytest"
+        framework: "pytest"
+        test_client: "fastapi.testclient.TestClient"
+      layers:
+        unit: "pytest"
+        integration: ""
+        e2e: ""
+      commands:
+        unit:
+          - scope: "backend/"
+            command: "cd backend && pytest"
+            framework: "pytest"
+        integration: []
+        e2e: []
+      coverage:
+        command: ""
+        commands: []
+      test_files:
+        - "backend/tests/test_main.py"
+    frontend:
+      runner:
+        command: "vitest"
+        framework: "vitest"
+        note: "Test file exists (chatStore.test.ts) but Vitest NOT installed. Needs: pnpm add -D vitest @testing-library/react jsdom + vitest.config.ts + test script"
+      layers:
+        unit: "vitest (not installed)"
+        integration: ""
+        e2e: ""
+      commands:
+        unit: []
+        integration: []
+        e2e: []
+      coverage:
+        command: ""
+        commands: []
+      test_files:
+        - "portfolio/src/store/chatStore.test.ts"
+quality:
+  lint: "cd portfolio && pnpm run lint"
+  lint_commands:
+    - scope: "portfolio"
+      command: "cd portfolio && pnpm run lint"
+      framework: "linter"
+  typecheck: ""
+  typecheck_commands: []
+  format: ""
+  format_commands: []

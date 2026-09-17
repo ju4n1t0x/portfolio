@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 1 0 0;
+    --foreground: 0.145 0 0;
+    --card: 1 0 0;
+    --card-foreground: 0.145 0 0;
+    --popover: 1 0 0;
+    --popover-foreground: 0.145 0 0;
+    --primary: 0.55 0.13 165;
+    --primary-foreground: 1 0 0;
+    --secondary: 0.97 0 0;
+    --secondary-foreground: 0.145 0 0;
+    --muted: 0.97 0 0;
+    --muted-foreground: 0.556 0 0;
+    --accent: 0.55 0.13 165;
+    --accent-foreground: 1 0 0;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.922 0 0;
+    --input: 0.922 0 0;
+    --ring: 0.55 0.13 165 / 60%;
+    --radius: 0.625rem;
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-border: 0.922 0 0;
+    --sidebar-hover: 0.97 0 0;
+    --sidebar-active: 0.95 0 0;
+
+    --chat-user: 0.96 0.005 165;
+    --chat-assistant: 1 0 0;
+  }
+
+  .dark {
+    --background: 0.16 0.004 285;
+    --foreground: 0.96 0.002 285;
+    --card: 0.205 0.004 285;
+    --card-foreground: 0.96 0.002 285;
+    --popover: 0.205 0.004 285;
+    --popover-foreground: 0.96 0.002 285;
+    --primary: 0.7 0.13 165;
+    --primary-foreground: 0.16 0.02 165;
+    --secondary: 0.26 0.004 285;
+    --secondary-foreground: 0.96 0.002 285;
+    --muted: 0.26 0.004 285;
+    --muted-foreground: 0.68 0.004 285;
+    --accent: 0.7 0.13 165;
+    --accent-foreground: 0.16 0.02 165;
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.96 0.002 285;
+    --border: 1 0 0 / 8%;
+    --input: 1 0 0 / 12%;
+    --ring: 0.7 0.13 165 / 60%;
+
+    --sidebar: 0.185 0.004 285;
+    --sidebar-foreground: 0.96 0.002 285;
+    --sidebar-border: 1 0 0 / 8%;
+    --sidebar-hover: 0.22 0.004 285;
+    --sidebar-active: 0.26 0.004 285;
+
+    --chat-user: 0.205 0.004 285;
+    --chat-assistant: 0.205 0.004 285;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Söhne', 'ui-sans-serif', 'system-ui', -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: oklch(var(--border)) transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: oklch(var(--border));
+    border-radius: 3px;
+  }
+
+  .animate-message-in {
+    animation-delay: calc(var(--stagger-index, 0) * 60ms);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    .animate-message-in {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
